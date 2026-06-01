@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-06-01T12:17:40.378Z",
+  "count": 4,
+  "projects": [
+    {
+      "slug": "2048 Game",
+      "title": "2048 Game",
+      "description": "The classic 2048 puzzle with keyboard and swipe input, smooth tile transitions and best-score persistence.",
+      "author": {
+        "name": "Web Dev Projects",
+        "github": "cu-sanjay"
+      },
+      "tags": [
+        "game",
+        "canvas-free",
+        "vanilla-js"
+      ],
+      "entry": "Projects/2048%20Game/index.html",
+      "folder": "Projects/2048%20Game",
+      "thumbnail": "Projects/2048%20Game/thumbnail.svg",
+      "addedAt": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "slug": "Daily Wheels",
+      "title": "Daily Wheels",
+      "description": "A weighted decision wheel for picking what to eat, watch or do today, with custom SVG graphics and category presets.",
+      "author": {
+        "name": "Web Dev Projects",
+        "github": "cu-sanjay"
+      },
+      "tags": [
+        "decision",
+        "svg",
+        "vanilla-js"
+      ],
+      "entry": "Projects/Daily%20Wheels/index.html",
+      "folder": "Projects/Daily%20Wheels",
+      "thumbnail": "Projects/Daily%20Wheels/thumbnail.svg",
+      "addedAt": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "slug": "Music Player",
+      "title": "Music Player",
+      "description": "An iPhone-style audio player with album art cards, scrubber, and a queue you can swipe through.",
+      "author": {
+        "name": "Web Dev Projects",
+        "github": "cu-sanjay"
+      },
+      "tags": [
+        "audio",
+        "ui",
+        "vanilla-js"
+      ],
+      "entry": "Projects/Music%20Player/index.html",
+      "folder": "Projects/Music%20Player",
+      "thumbnail": "Projects/Music%20Player/thumbnail.svg",
+      "addedAt": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "slug": "Notes App",
+      "title": "Notes App",
+      "description": "A clean, keyboard-friendly notes app with live URL detection, tags and localStorage persistence.",
+      "author": {
+        "name": "Web Dev Projects",
+        "github": "cu-sanjay"
+      },
+      "tags": [
+        "productivity",
+        "vanilla-js",
+        "localstorage"
+      ],
+      "entry": "Projects/Notes%20App/index.html",
+      "folder": "Projects/Notes%20App",
+      "thumbnail": "Projects/Notes%20App/thumbnail.svg",
+      "addedAt": "1970-01-01T00:00:00.000Z"
+    }
+  ]
+}
