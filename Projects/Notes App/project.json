@@ -1,0 +1,8 @@
+{
+  "title": "Notes App",
+  "description": "A clean, keyboard-friendly notes app with live URL detection, tags and localStorage persistence.",
+  "author": { "name": "Web Dev Projects", "github": "cu-sanjay" },
+  "tags": ["productivity", "vanilla-js", "localstorage"],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}

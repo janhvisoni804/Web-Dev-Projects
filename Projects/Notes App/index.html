@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Notes App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="bar">
+    <h1>Notes</h1>
+    <div class="bar__actions">
+      <input id="search" type="search" placeholder="Search notes, tags" />
+      <button id="new" class="btn">New note</button>
+    </div>
+  </header>
+  <main class="layout">
+    <aside id="list" class="list" aria-label="Notes list"></aside>
+    <section id="editor" class="editor" hidden>
+      <input id="title" class="editor__title" placeholder="Title" />
+      <textarea id="body" class="editor__body" placeholder="Write your note. Drop links and #tags right in the body."></textarea>
+      <div class="editor__meta">
+        <ul id="tags" class="tags"></ul>
+        <div class="editor__actions">
+          <button id="delete" class="btn btn--danger">Delete</button>
+          <button id="close" class="btn">Close</button>
+        </div>
+      </div>
+      <div id="preview" class="preview" aria-live="polite"></div>
+    </section>
+    <p id="empty" class="empty">No note selected. Pick one on the left or create a new one.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
