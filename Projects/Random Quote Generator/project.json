@@ -1,0 +1,6 @@
+{
+  "name": "Random Quote Generator",
+  "description": "Displays a random motivational or famous quote on button click.",
+  "author": { "name": "Web Dev Projects", "github": "cu-sanjay" },
+  "language": ["HTML", "CSS", "JavaScript"]
+}
