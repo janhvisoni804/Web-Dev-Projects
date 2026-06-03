@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <header class="header">
+      <div class="logo">
+        <span class="logo__icon">🍅</span>
+        <span class="logo__text">Pomodoro Timer</span>
+      </div>
+      <div class="header__actions">
+        <button id="btn-stats" class="icon-btn" aria-label="View stats" title="Stats">📊</button>
+        <button id="btn-settings" class="icon-btn" aria-label="Open settings" title="Settings">⚙️</button>
+        <button id="btn-theme" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+      </div>
+    </header>
+
+    <!-- Mode tabs -->
+    <nav class="mode-tabs" role="tablist" aria-label="Timer modes">
+      <button class="tab active" data-mode="pomodoro" role="tab" aria-selected="true">Pomodoro</button>
+      <button class="tab" data-mode="short" role="tab" aria-selected="false">Short Break</button>
+      <button class="tab" data-mode="long" role="tab" aria-selected="false">Long Break</button>
+    </nav>
+
+    <!-- Timer -->
+    <main class="timer-card" id="timer-card">
+      <div class="ring-wrap" role="timer" aria-live="polite" aria-label="Timer display">
+        <svg class="ring" viewBox="0 0 220 220" aria-hidden="true">
+          <circle class="ring__track" cx="110" cy="110" r="96"/>
+          <circle class="ring__progress" id="ring-progress" cx="110" cy="110" r="96"/>
+        </svg>
+        <div class="ring__inner">
+          <div class="timer-display" id="timer-display">25:00</div>
+          <div class="session-label" id="session-label">Focus Time</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="btn-reset" class="ctrl-btn ctrl-btn--secondary" aria-label="Reset timer" title="Reset">↺</button>
+        <button id="btn-start" class="ctrl-btn ctrl-btn--primary" aria-label="Start timer">Start</button>
+        <button id="btn-skip" class="ctrl-btn ctrl-btn--secondary" aria-label="Skip to next session" title="Skip">⏭</button>
+      </div>
+
+      <div class="session-info">
+        <span id="session-count">Session <strong>1</strong> of <strong>4</strong></span>
+        <span class="dot">·</span>
+        <span id="pomodoros-done">0 🍅 today</span>
+      </div>
+    </main>
+
+    <!-- Task input -->
+    <section class="task-section">
+      <div class="task-header">
+        <h2 class="task-title">Today's Tasks</h2>
+        <span id="task-progress" class="task-progress">0 / 0</span>
+      </div>
+      <div class="task-input-row">
+        <input id="task-input" class="task-input" type="text" placeholder="What are you working on?" maxlength="80" />
+        <button id="btn-add-task" class="add-btn" aria-label="Add task">+</button>
+      </div>
+      <ul id="task-list" class="task-list" aria-label="Task list"></ul>
+    </section>
+
+    <!-- Stats panel (hidden by default) -->
+    <aside id="stats-panel" class="panel" hidden aria-label="Statistics">
+      <div class="panel__header">
+        <h2>Your Stats</h2>
+        <button class="panel__close" id="btn-close-stats" aria-label="Close stats">✕</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-today">0</div>
+          <div class="stat-label">Pomodoros Today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-week">0</div>
+          <div class="stat-label">This Week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-label">All Time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-streak">0🔥</div>
+          <div class="stat-label">Day Streak</div>
+        </div>
+      </div>
+      <div class="weekly-chart" aria-label="Weekly pomodoros chart">
+        <div class="chart-label">Last 7 days</div>
+        <div id="week-bars" class="week-bars"></div>
+      </div>
+      <button id="btn-reset-stats" class="danger-btn">Reset All Stats</button>
+    </aside>
+
+    <!-- Settings panel (hidden by default) -->
+    <aside id="settings-panel" class="panel" hidden aria-label="Settings">
+      <div class="panel__header">
+        <h2>Settings</h2>
+        <button class="panel__close" id="btn-close-settings" aria-label="Close settings">✕</button>
+      </div>
+      <div class="settings-list">
+        <label class="setting-row">
+          <span class="setting-name">Pomodoro (min)</span>
+          <input type="number" id="set-pomodoro" class="setting-input" min="1" max="60" value="25" />
+        </label>
+        <label class="setting-row">
+          <span class="setting-name">Short Break (min)</span>
+          <input type="number" id="set-short" class="setting-input" min="1" max="30" value="5" />
+        </label>
+        <label class="setting-row">
+          <span class="setting-name">Long Break (min)</span>
+          <input type="number" id="set-long" class="setting-input" min="1" max="60" value="15" />
+        </label>
+        <label class="setting-row">
+          <span class="setting-name">Sessions before long break</span>
+          <input type="number" id="set-sessions" class="setting-input" min="1" max="10" value="4" />
+        </label>
+        <label class="setting-row">
+          <span class="setting-name">Auto-start breaks</span>
+          <input type="checkbox" id="set-autobreak" class="setting-check" />
+        </label>
+        <label class="setting-row">
+          <span class="setting-name">Auto-start pomodoros</span>
+          <input type="checkbox" id="set-autopomo" class="setting-check" />
+        </label>
+        <label class="setting-row">
+          <span class="setting-name">Sound alerts</span>
+          <input type="checkbox" id="set-sound" class="setting-check" checked />
+        </label>
+        <label class="setting-row">
+          <span class="setting-name">Browser notifications</span>
+          <input type="checkbox" id="set-notify" class="setting-check" />
+        </label>
+      </div>
+      <button id="btn-save-settings" class="save-btn">Save Settings</button>
+    </aside>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay" hidden></div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

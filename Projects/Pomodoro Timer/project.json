@@ -1,0 +1,11 @@
+{
+  "title": "Pomodoro Timer",
+  "description": "A focus timer with task tracking, stats dashboard, customisable durations, sound alerts and light/dark theme.",
+  "author": {
+    "name": "Haripriya Gupta",
+    "github": "https://github.com/Haripriyagupta"
+  },
+  "tags": ["productivity", "timer", "localstorage", "vanilla-js", "accessibility"],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}
