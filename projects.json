@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-03T12:36:25.627Z",
+  "generatedAt": "2026-06-03T13:04:58.178Z",
   "count": 9,
   "projects": [
     {
@@ -18,7 +18,7 @@
       "entry": "Projects/2048%20Game/index.html",
       "folder": "Projects/2048%20Game",
       "thumbnail": "Projects/2048%20Game/thumbnail.svg",
-      "addedAt": "2026-06-03T12:29:09.311Z"
+      "addedAt": "2026-06-03T13:04:53.824Z"
     },
     {
       "slug": "Daily Wheels",
@@ -36,7 +36,7 @@
       "entry": "Projects/Daily%20Wheels/index.html",
       "folder": "Projects/Daily%20Wheels",
       "thumbnail": "Projects/Daily%20Wheels/thumbnail.svg",
-      "addedAt": "2026-06-03T12:29:09.325Z"
+      "addedAt": "2026-06-03T13:04:53.824Z"
     },
     {
       "slug": "Developer Portfolio Builder",
@@ -55,15 +55,15 @@
       "entry": "Projects/Developer%20Portfolio%20Builder/index.html",
       "folder": "Projects/Developer%20Portfolio%20Builder",
       "thumbnail": "Projects/Developer%20Portfolio%20Builder/thumbnail.svg",
-      "addedAt": "2026-06-03T12:29:09.344Z"
+      "addedAt": "2026-06-03T13:04:53.824Z"
     },
     {
       "slug": "Image Gallery",
       "title": "Image Gallery",
       "description": "A responsive image gallery with drag-and-drop upload, IndexedDB persistence, categorization, and lightbox navigation.",
       "author": {
-        "name": "Web Dev Projects",
-        "github": "cu-sanjay"
+        "name": "Shubham",
+        "github": "Shubham2775"
       },
       "tags": [
         "productivity",
@@ -74,7 +74,7 @@
       "entry": "Projects/Image%20Gallery/index.html",
       "folder": "Projects/Image%20Gallery",
       "thumbnail": "Projects/Image%20Gallery/thumbnail.svg",
-      "addedAt": "2026-06-03T12:31:48.770Z"
+      "addedAt": "2026-06-03T13:04:53.825Z"
     },
     {
       "slug": "Markdown Editor",
@@ -94,7 +94,7 @@
       "entry": "Projects/Markdown%20Editor/index.html",
       "folder": "Projects/Markdown%20Editor",
       "thumbnail": "Projects/Markdown%20Editor/thumbnail.svg",
-      "addedAt": "2026-06-03T12:29:09.363Z"
+      "addedAt": "2026-06-03T13:04:53.825Z"
     },
     {
       "slug": "Music Player",
@@ -114,7 +114,7 @@
       "entry": "Projects/Music%20Player/index.html",
       "folder": "Projects/Music%20Player",
       "thumbnail": "Projects/Music%20Player/thumbnail.svg",
-      "addedAt": "2026-06-03T12:29:09.406Z"
+      "addedAt": "2026-06-03T13:04:53.826Z"
     },
     {
       "slug": "Notes App",
@@ -132,7 +132,7 @@
       "entry": "Projects/Notes%20App/index.html",
       "folder": "Projects/Notes%20App",
       "thumbnail": "Projects/Notes%20App/thumbnail.svg",
-      "addedAt": "2026-06-03T12:29:09.423Z"
+      "addedAt": "2026-06-03T13:04:53.826Z"
     },
     {
       "slug": "Pomodoro Timer",
@@ -152,7 +152,7 @@
       "entry": "Projects/Pomodoro%20Timer/index.html",
       "folder": "Projects/Pomodoro%20Timer",
       "thumbnail": "Projects/Pomodoro%20Timer/thumbnail.svg",
-      "addedAt": "2026-06-03T12:29:09.483Z"
+      "addedAt": "2026-06-03T13:04:53.826Z"
     },
     {
       "slug": "Weather Finder",
@@ -170,7 +170,7 @@
       "entry": "Projects/Weather%20Finder/index.html",
       "folder": "Projects/Weather%20Finder",
       "thumbnail": null,
-      "addedAt": "2026-06-03T12:29:09.508Z"
+      "addedAt": "2026-06-03T13:04:53.826Z"
     }
   ]
 }
