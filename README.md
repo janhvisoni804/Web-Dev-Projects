@@ -1,3 +1,7 @@
+>[!WARNING]
+> You should not edit the main `projects.json` file manually. Simply submit your project folder with its own `project.json` file included. The project index is generated automatically.
+Please avoid making any changes outside your project's folder.
+
 <div align="center">
 
 <img src="assets/icons/logo.svg" alt="Web Dev Projects" width="110" />
