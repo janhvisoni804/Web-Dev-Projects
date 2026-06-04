@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-03T16:01:40.987Z",
-  "count": 14,
+  "generatedAt": "2026-06-04T01:27:33.087Z",
+  "count": 16,
   "projects": [
     {
       "slug": "2048 Game",
@@ -18,7 +18,7 @@
       "entry": "Projects/2048%20Game/index.html",
       "folder": "Projects/2048%20Game",
       "thumbnail": "Projects/2048%20Game/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.634Z"
+      "addedAt": "2026-06-04T01:27:29.131Z"
     },
     {
       "slug": "Chat Room",
@@ -38,7 +38,7 @@
       "entry": "Projects/Chat%20Room/index.html",
       "folder": "Projects/Chat%20Room",
       "thumbnail": "Projects/Chat%20Room/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.634Z"
+      "addedAt": "2026-06-04T01:27:29.131Z"
     },
     {
       "slug": "Daily Wheels",
@@ -56,7 +56,7 @@
       "entry": "Projects/Daily%20Wheels/index.html",
       "folder": "Projects/Daily%20Wheels",
       "thumbnail": "Projects/Daily%20Wheels/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.634Z"
+      "addedAt": "2026-06-04T01:27:29.132Z"
     },
     {
       "slug": "Developer Portfolio Builder",
@@ -75,7 +75,25 @@
       "entry": "Projects/Developer%20Portfolio%20Builder/index.html",
       "folder": "Projects/Developer%20Portfolio%20Builder",
       "thumbnail": "Projects/Developer%20Portfolio%20Builder/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.635Z"
+      "addedAt": "2026-06-04T01:27:29.132Z"
+    },
+    {
+      "slug": "Digital Clock",
+      "title": "Digital Clock",
+      "description": "A sleek digital clock featuring live real-time updates through native JavaScript APIs, dynamic calendar views, and interactive 12/24 hour display formatting toggles.",
+      "author": {
+        "name": "Shruti Narsulwar",
+        "github": "Shrutiii01"
+      },
+      "tags": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "entry": "Projects/Digital%20Clock/index.html",
+      "folder": "Projects/Digital%20Clock",
+      "thumbnail": null,
+      "addedAt": "2026-06-04T01:27:29.132Z"
     },
     {
       "slug": "Expense Tracker",
@@ -94,7 +112,7 @@
       "entry": "Projects/Expense%20Tracker/index.html",
       "folder": "Projects/Expense%20Tracker",
       "thumbnail": "Projects/Expense%20Tracker/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.635Z"
+      "addedAt": "2026-06-04T01:27:29.133Z"
     },
     {
       "slug": "Image Gallery",
@@ -113,7 +131,7 @@
       "entry": "Projects/Image%20Gallery/index.html",
       "folder": "Projects/Image%20Gallery",
       "thumbnail": "Projects/Image%20Gallery/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.636Z"
+      "addedAt": "2026-06-04T01:27:29.133Z"
     },
     {
       "slug": "Markdown Editor",
@@ -133,7 +151,7 @@
       "entry": "Projects/Markdown%20Editor/index.html",
       "folder": "Projects/Markdown%20Editor",
       "thumbnail": "Projects/Markdown%20Editor/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.636Z"
+      "addedAt": "2026-06-04T01:27:29.134Z"
     },
     {
       "slug": "Movie Search App",
@@ -153,7 +171,7 @@
       "entry": "Projects/Movie%20Search%20App/index.html",
       "folder": "Projects/Movie%20Search%20App",
       "thumbnail": "Projects/Movie%20Search%20App/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.637Z"
+      "addedAt": "2026-06-04T01:27:29.134Z"
     },
     {
       "slug": "Music Player",
@@ -173,7 +191,7 @@
       "entry": "Projects/Music%20Player/index.html",
       "folder": "Projects/Music%20Player",
       "thumbnail": "Projects/Music%20Player/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.637Z"
+      "addedAt": "2026-06-04T01:27:29.135Z"
     },
     {
       "slug": "Notes App",
@@ -191,7 +209,7 @@
       "entry": "Projects/Notes%20App/index.html",
       "folder": "Projects/Notes%20App",
       "thumbnail": "Projects/Notes%20App/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.637Z"
+      "addedAt": "2026-06-04T01:27:29.135Z"
     },
     {
       "slug": "Password Generator",
@@ -210,7 +228,7 @@
       "entry": "Projects/Password%20Generator/index.html",
       "folder": "Projects/Password%20Generator",
       "thumbnail": "Projects/Password%20Generator/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.637Z"
+      "addedAt": "2026-06-04T01:27:29.135Z"
     },
     {
       "slug": "Pomodoro Timer",
@@ -230,7 +248,25 @@
       "entry": "Projects/Pomodoro%20Timer/index.html",
       "folder": "Projects/Pomodoro%20Timer",
       "thumbnail": "Projects/Pomodoro%20Timer/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.638Z"
+      "addedAt": "2026-06-04T01:27:29.135Z"
+    },
+    {
+      "slug": "QR Code Generator",
+      "title": "QR Code Generator",
+      "description": "Generate custom QR codes dynamically using links, plain text, or small configuration file payloads with custom color layouts.",
+      "author": {
+        "name": "Shruti Narsulwar",
+        "github": "Shrutiii01"
+      },
+      "tags": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "entry": "Projects/QR%20Code%20Generator/index.html",
+      "folder": "Projects/QR%20Code%20Generator",
+      "thumbnail": null,
+      "addedAt": "2026-06-04T01:27:29.136Z"
     },
     {
       "slug": "Quiz Master",
@@ -249,7 +285,7 @@
       "entry": "Projects/Quiz%20Master/index.html",
       "folder": "Projects/Quiz%20Master",
       "thumbnail": "Projects/Quiz%20Master/thumbnail.svg",
-      "addedAt": "2026-06-03T16:01:36.638Z"
+      "addedAt": "2026-06-04T01:27:29.136Z"
     },
     {
       "slug": "Weather Finder",
@@ -267,7 +303,7 @@
       "entry": "Projects/Weather%20Finder/index.html",
       "folder": "Projects/Weather%20Finder",
       "thumbnail": null,
-      "addedAt": "2026-06-03T16:01:36.638Z"
+      "addedAt": "2026-06-04T01:27:29.136Z"
     }
   ]
 }
