@@ -12,3 +12,8 @@ An interactive web widget designed to pull calendar configurations and time comp
 
 - Full usage of standard browser `Date()` architectures.
 - Layout tracking and flashing colon behaviors optimized through purely clean styling loops.
+
+## Author
+
+- **Mistry Vishwa** ([MistryVishwa](https://github.com/MistryVishwa))
+
