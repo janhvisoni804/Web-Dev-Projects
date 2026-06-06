@@ -23,6 +23,23 @@
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
+[data-theme="dark"] {
+  --bg: #121214;
+  --surface: #1a1a1e;
+  --surface-2: #242429;
+  --ink: #f5f1ea;
+  --ink-soft: #dcd7ce;
+  --muted: #8e8e93;
+  --line: #2a2a2e;
+  --line-strong: #3e3e42;
+  --accent: #dca052;
+  --accent-ink: #121214;
+  --accent-soft: #2e261b;
+  --good: #4fa164;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2);
+  --shadow: 0 6px 24px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
 * { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
@@ -90,11 +107,38 @@ code {
   font-weight: 500;
 }
 .topnav a:hover { background: var(--surface-2); color: var(--ink); }
+.theme-toggle {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  transition: background 120ms ease, color 120ms ease, transform 120ms ease;
+}
+.theme-toggle:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+  transform: scale(1.05);
+}
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+.sun-icon { display: none; }
+.moon-icon { display: block; }
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
 .topnav__github {
   background: var(--ink);
-  color: var(--surface) !important;
+  color: var(--bg) !important;
 }
-.topnav__github:hover { background: #000; color: #fff !important; }
+.topnav__github:hover {
+  background: var(--ink-soft);
+  color: var(--bg) !important;
+}
 
 /* Layout */
 main {
@@ -169,8 +213,12 @@ main {
   transition: background 120ms ease, color 120ms ease, transform 120ms ease, border-color 120ms ease;
   cursor: pointer;
 }
-.btn--primary { background: var(--ink); color: #fff; }
-.btn--primary:hover { background: #000; color: #fff; transform: translateY(-1px); }
+.btn--primary { background: var(--ink); color: var(--bg); }
+.btn--primary:hover {
+  background: var(--ink-soft);
+  color: var(--bg);
+  transform: translateY(-1px);
+}
 .btn--ghost {
   background: var(--surface-2);
   color: var(--ink);
@@ -322,6 +370,12 @@ main {
 .program:nth-child(4) {
   background: #e8f4ff;
 }
+
+[data-theme="dark"] .program:nth-child(1) { background: #26161c; }
+[data-theme="dark"] .program:nth-child(2) { background: #281622; }
+[data-theme="dark"] .program:nth-child(3) { background: #282412; }
+[data-theme="dark"] .program:nth-child(4) { background: #121c28; }
+[data-theme="dark"] .program__logo { background: rgba(0, 0, 0, 0.4); }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -561,7 +615,7 @@ main {
     /* Wildcard * selector use karke website ke har ek tiny element se cursor hataya */
     *, *::before, *::after, 
     html, body, input, input[type="text"], 
-    .search-input, #search, button, a {
+    .search-input, #search, button, a, select, .sort-select, .theme-toggle {
         cursor: none !important;
     }
 }
