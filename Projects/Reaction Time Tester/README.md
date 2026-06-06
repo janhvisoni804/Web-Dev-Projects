@@ -1,16 +1,17 @@
 # Reaction Time Tester
 
-A fun and interactive project to measure how quickly a user clicks after a visual signal appears.  
-This project covers **timers, randomness, and performance tracking** with a clean dark UI.
+A millisecond-accurate reaction time measurement tool built with vanilla JavaScript.
 
 ## Features
-- Random delay before signal appears (2–5 seconds).
-- Tracks reaction time in milliseconds.
-- Feedback for early clicks.
-- Displays average reaction time across multiple attempts.
-- Modern dark theme with gradient accents.
 
-## How to Run
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/<your-username>/reaction-time-tester.git
+- 5-state machine: Idle → Waiting → Triggered → Penalty → Results.
+- `performance.now()` high-resolution timing for millisecond-precise readings.
+- Random delay window (2000–5000ms) before green signal.
+- Anti-cheat false-start detection: clicking before the signal triggers a penalty screen.
+- Historical attempt log with scrollable feed.
+- Persistent best record via `localStorage` with animated "BEST" badge.
+- Responsive design with a large tap target for mobile.
+
+## Run it
+
+Open `index.html` in any modern browser.
