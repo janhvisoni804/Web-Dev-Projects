@@ -162,3 +162,19 @@ search.addEventListener("input", (e) => {
 });
 
 boot();
+
+// Create glow cursor element
+const glowCursor = document.createElement("div");
+glowCursor.classList.add("glow-cursor");
+document.body.appendChild(glowCursor);
+
+// Track mouse movement
+document.addEventListener("mousemove", (e) => {
+  glowCursor.style.left = e.pageX + "px";
+  glowCursor.style.top = e.pageY + "px";
+});
+
+document.addEventListener("mousemove", (e) => {
+  glowCursor.style.left = (e.clientX + window.scrollX) + "px";
+  glowCursor.style.top = (e.clientY + window.scrollY) + "px";
+});
