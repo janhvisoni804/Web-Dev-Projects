@@ -12,6 +12,11 @@ const empty = document.getElementById("empty");
 const statCount = document.getElementById("stat-count");
 const statUpdated = document.getElementById("stat-updated");
 
+const tagModalOverlay = document.getElementById("tag-modal-overlay");
+const tagModalCloseBtn = document.getElementById("tag-modal-close");
+const tagModalSearchInput = document.getElementById("tag-modal-search");
+const tagModalCloud = document.getElementById("tag-modal-cloud");
+
 const state = { all: [], filtered: [], activeTag: null, query: "", sortBy: "default", onlyBookmarks: false };
 
 function getBookmarks() {
@@ -201,6 +206,102 @@ function renderTagbar() {
       render();
     });
     tagbar.appendChild(b);
+  }
+
+  // Explore All Tags button
+  const exploreBtn = document.createElement("button");
+  exploreBtn.type = "button";
+  exploreBtn.className = "btn-explore-tags";
+  exploreBtn.innerHTML = `Explore All Tags <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+  exploreBtn.addEventListener("click", () => {
+    openTagModal();
+  });
+  tagbar.appendChild(exploreBtn);
+}
+
+function openTagModal() {
+  tagModalSearchInput.value = "";
+  renderTagCloud("");
+  tagModalOverlay.classList.add("is-open");
+  tagModalSearchInput.focus();
+}
+
+function closeTagModal() {
+  tagModalOverlay.classList.remove("is-open");
+}
+
+if (tagModalCloseBtn) {
+  tagModalCloseBtn.addEventListener("click", closeTagModal);
+}
+
+if (tagModalOverlay) {
+  tagModalOverlay.addEventListener("click", (e) => {
+    if (e.target === tagModalOverlay) closeTagModal();
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && tagModalOverlay && tagModalOverlay.classList.contains("is-open")) {
+    closeTagModal();
+  }
+});
+
+if (tagModalSearchInput) {
+  tagModalSearchInput.addEventListener("input", (e) => {
+    renderTagCloud(e.target.value);
+  });
+}
+
+function renderTagCloud(query) {
+  const counts = new Map();
+  for (const p of state.all) for (const t of p.tags) counts.set(t, (counts.get(t) || 0) + 1);
+  
+  let allTags = [...counts.entries()];
+  
+  if (query) {
+    const q = query.trim().toLowerCase();
+    allTags = allTags.filter(([tag]) => tag.toLowerCase().includes(q));
+  }
+  
+  if (allTags.length === 0) {
+    tagModalCloud.innerHTML = '<p style="color: var(--muted); padding: 1rem;">No tags found.</p>';
+    return;
+  }
+
+  const countsArr = allTags.map(t => t[1]);
+  const minCount = Math.min(...countsArr);
+  const maxCount = Math.max(...countsArr);
+  
+  tagModalCloud.replaceChildren();
+  allTags.sort((a, b) => a[0].localeCompare(b[0]));
+  
+  for (const [tag, count] of allTags) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "tag-cloud-item";
+    btn.textContent = `${tag} (${count})`;
+    
+    let size = 0.85;
+    if (maxCount > minCount) {
+      size = 0.85 + ((count - minCount) / (maxCount - minCount)) * 0.75;
+    }
+    btn.style.fontSize = `${size}rem`;
+    
+    if (state.activeTag === tag) {
+      btn.style.backgroundColor = "var(--ink)";
+      btn.style.color = "var(--surface)";
+      btn.style.borderColor = "var(--ink)";
+    }
+    
+    btn.addEventListener("click", () => {
+      state.activeTag = tag;
+      state.onlyBookmarks = false;
+      closeTagModal();
+      renderTagbar();
+      render();
+    });
+    
+    tagModalCloud.appendChild(btn);
   }
 }
 
