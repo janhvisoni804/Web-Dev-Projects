@@ -211,3 +211,67 @@ function filterComplexity(level) {
     card.style.display = (level === "all" || badge.classList.contains(level)) ? "block" : "none";
   });
 }
+
+const drawer = document.getElementById("previewDrawer");
+const backdrop = document.getElementById("previewBackdrop");
+const closeBtn = document.getElementById("close-preview");
+const frame = document.getElementById("preview-frame");
+const loader = drawer.querySelector(".loader");
+
+// Open drawer when clicking Preview button
+document.addEventListener("click", e => {
+  if (e.target.classList.contains("preview-btn")) {
+    const entry = e.target.dataset.entry;
+    const title = e.target.dataset.title;
+
+    document.getElementById("preview-title").textContent = title;
+    document.getElementById("open-new-tab").href = entry;
+
+    frame.src = entry;
+    loader.style.display = "block";
+
+    drawer.classList.add("open");
+    backdrop.classList.add("show");
+
+    frame.onload = () => {
+      loader.style.display = "none";
+    };
+  }
+});
+
+// Close drawer on X button
+closeBtn.addEventListener("click", () => {
+  drawer.classList.remove("open");
+  backdrop.classList.remove("show");
+  frame.src = ""; // clear iframe
+});
+
+// Close drawer on backdrop click
+backdrop.addEventListener("click", () => {
+  drawer.classList.remove("open");
+  backdrop.classList.remove("show");
+  frame.src = "";
+});
+
+// Close drawer on Escape key
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    drawer.classList.remove("open");
+    backdrop.classList.remove("show");
+    frame.src = "";
+  }
+});
+
+// Device switcher
+document.querySelectorAll(".device-switcher button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (btn.dataset.device === "mobile") {
+      frame.style.width = "375px";
+    } else if (btn.dataset.device === "tablet") {
+      frame.style.width = "768px";
+    } else {
+      frame.style.width = "100%";
+    }
+  });
+});
+

@@ -225,6 +225,27 @@
       </li>
     </template>
 
+<!-- Sandbox Preview Drawer -->
+<div id="previewBackdrop" class="preview-backdrop"></div>
+
+<div id="previewDrawer" class="preview-drawer">
+  <div class="preview-header">
+    <span id="preview-title"></span>
+    <div class="device-switcher">
+      <button data-device="desktop">Desktop</button>
+      <button data-device="tablet">Tablet</button>
+      <button data-device="mobile">Mobile</button>
+    </div>
+    <a id="open-new-tab" target="_blank" class="btn btn--ghost">Open in New Tab</a>
+    <button id="close-preview" class="btn btn--ghost">×</button>
+  </div>
+  <div class="preview-iframe">
+    <div class="loader">Loading...</div>
+    <iframe id="preview-frame" sandbox="allow-scripts allow-same-origin"></iframe>
+  </div>
+</div>
+
+
     <script src="assets/app.js" type="module"></script>
   </body>
 </html>
