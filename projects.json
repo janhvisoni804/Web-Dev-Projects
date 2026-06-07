@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-07T08:45:56.802Z",
-  "count": 87,
+  "generatedAt": "2026-06-07T08:47:52.725Z",
+  "count": 88,
   "projects": [
     {
       "slug": "2048 Game",
@@ -252,6 +252,26 @@
       "folder": "Projects/Chrono%20Sweeper",
       "thumbnail": null,
       "addedAt": "2026-06-06T11:46:21.405Z"
+    },
+    {
+      "slug": "Coding Challenge Tracker",
+      "title": "Coding Challenge Tracker",
+      "description": "An interactive frontend dashboard that helps developers record solved problems, monitor progress across platforms, maintain streaks, track goals, and visualize achievements with full offline data portability.",
+      "author": {
+        "name": "Mistry Vishwa",
+        "github": "MistryVishwa"
+      },
+      "tags": [
+        "productivity",
+        "dashboard",
+        "charts",
+        "gamification",
+        "localstorage"
+      ],
+      "entry": "Projects/Coding%20Challenge%20Tracker/index.html",
+      "folder": "Projects/Coding%20Challenge%20Tracker",
+      "thumbnail": "Projects/Coding%20Challenge%20Tracker/thumbnail.svg",
+      "addedAt": "2026-06-07T08:47:02.521Z"
     },
     {
       "slug": "Color Guessing Game",
