@@ -3,13 +3,36 @@
 const grid = document.getElementById("grid");
 const tpl = document.getElementById("card-template");
 const search = document.getElementById("search");
+const shuffleBtn = document.getElementById("shuffle-btn");
+const themeToggle = document.getElementById("theme-toggle");
+const sortSelect = document.getElementById("sort-select");
 const tagbar = document.getElementById("tagbar");
 const empty = document.getElementById("empty");
 
 const statCount = document.getElementById("stat-count");
 const statUpdated = document.getElementById("stat-updated");
 
-const state = { all: [], activeTag: null, query: "" };
+const state = { all: [], filtered: [], activeTag: null, query: "", sortBy: "default", onlyBookmarks: false };
+
+function getBookmarks() {
+  try {
+    return JSON.parse(localStorage.getItem("bookmarked_projects")) || [];
+  } catch {
+    return [];
+  }
+}
+
+function toggleBookmark(slug) {
+  const bookmarks = getBookmarks();
+  const idx = bookmarks.indexOf(slug);
+  if (idx > -1) {
+    bookmarks.splice(idx, 1);
+  } else {
+    bookmarks.push(slug);
+  }
+  localStorage.setItem("bookmarked_projects", JSON.stringify(bookmarks));
+  return bookmarks;
+}
 
 const PALETTES = [
   ["#efe1cf", "#b86a2b"],
@@ -53,7 +76,9 @@ function placeholderThumb(project) {
 
 function render() {
   const q = state.query.trim().toLowerCase();
+  const bookmarks = getBookmarks();
   const list = state.all.filter((p) => {
+    if (state.onlyBookmarks && !bookmarks.includes(p.slug)) return false;
     if (state.activeTag && !p.tags.includes(state.activeTag)) return false;
     if (!q) return true;
     return (
@@ -65,6 +90,15 @@ function render() {
     );
   });
 
+  state.filtered = list;
+  if (state.sortBy === "newest") {
+    list.sort((a, b) => new Date(b.addedAt || 0) - new Date(a.addedAt || 0));
+  } else if (state.sortBy === "oldest") {
+    list.sort((a, b) => new Date(a.addedAt || 0) - new Date(b.addedAt || 0));
+  } else if (state.sortBy === "alpha") {
+    list.sort((a, b) => a.title.localeCompare(b.title));
+  }
+
   grid.replaceChildren();
   if (!list.length) {
     empty.hidden = false;
@@ -74,6 +108,8 @@ function render() {
 
   for (const p of list) {
     const node = tpl.content.firstElementChild.cloneNode(true);
+    node.dataset.slug = p.slug;
+    const bookmarkBtn = node.querySelector(".card__bookmark-btn");
     const media = node.querySelector(".card__media");
     const thumb = node.querySelector(".card__thumb");
     const title = node.querySelector(".card__title");
@@ -82,6 +118,20 @@ function render() {
     const author = node.querySelector(".card__author");
     const open = node.querySelector(".card__open");
     const source = node.querySelector(".card__source");
+
+    if (bookmarks.includes(p.slug)) {
+      bookmarkBtn.classList.add("is-bookmarked");
+    }
+
+    bookmarkBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleBookmark(p.slug);
+      bookmarkBtn.classList.toggle("is-bookmarked");
+      if (state.onlyBookmarks) {
+        render();
+      }
+    });
 
     media.href = p.entry;
     thumb.style.backgroundImage = `url("${p.thumbnail || placeholderThumb(p)}")`;
@@ -110,12 +160,35 @@ function renderTagbar() {
   const tags = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12);
 
   tagbar.replaceChildren();
+  
+  // All button
   const all = document.createElement("button");
   all.type = "button";
   all.textContent = "All";
-  all.setAttribute("aria-pressed", state.activeTag === null);
-  all.addEventListener("click", () => { state.activeTag = null; renderTagbar(); render(); });
+  all.setAttribute("aria-pressed", state.activeTag === null && !state.onlyBookmarks);
+  all.addEventListener("click", () => {
+    state.activeTag = null;
+    state.onlyBookmarks = false;
+    renderTagbar();
+    render();
+  });
   tagbar.appendChild(all);
+
+  // Favorites button
+  const favBtn = document.createElement("button");
+  favBtn.type = "button";
+  favBtn.innerHTML = `
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="${state.onlyBookmarks ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 6px;">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </svg>Favorites
+  `;
+  favBtn.setAttribute("aria-pressed", state.onlyBookmarks);
+  favBtn.addEventListener("click", () => {
+    state.onlyBookmarks = !state.onlyBookmarks;
+    renderTagbar();
+    render();
+  });
+  tagbar.appendChild(favBtn);
 
   for (const [tag] of tags) {
     const b = document.createElement("button");
@@ -161,18 +234,44 @@ search.addEventListener("input", (e) => {
   render();
 });
 
+if (shuffleBtn) {
+  shuffleBtn.addEventListener("click", () => {
+    const activeProjects = state.filtered && state.filtered.length ? state.filtered : state.all;
+    if (!activeProjects.length) return;
+
+    const randomProject = activeProjects[Math.floor(Math.random() * activeProjects.length)];
+    const cardEl = grid.querySelector(`[data-slug="${randomProject.slug}"]`);
+    
+    if (cardEl) {
+      cardEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      
+      cardEl.classList.add("card--highlight");
+      setTimeout(() => {
+        cardEl.classList.remove("card--highlight");
+      }, 2000);
+    }
+  });
+}
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", newTheme === "dark" ? "#0b0c10" : "#f5f1ea");
+  });
+}
+
+if (sortSelect) {
+  sortSelect.addEventListener("change", (e) => {
+    state.sortBy = e.target.value;
+    render();
+  });
+}
+
 boot();
-
-// Create glow cursor element
-const glowCursor = document.createElement("div");
-glowCursor.classList.add("glow-cursor");
-document.body.appendChild(glowCursor);
-
-// Track mouse movement
-document.addEventListener("mousemove", (e) => {
-  glowCursor.style.left = e.pageX + "px";
-  glowCursor.style.top = e.pageY + "px";
-});
 
 document.addEventListener("mousemove", (e) => {
   glowCursor.style.left = (e.clientX + window.scrollX) + "px";
