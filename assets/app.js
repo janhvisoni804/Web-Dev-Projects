@@ -507,3 +507,40 @@ document.addEventListener("click", (e) => {
 
 boot();
 
+document.addEventListener("mousemove", (e) => {
+  glowCursor.style.left = (e.clientX + window.scrollX) + "px";
+  glowCursor.style.top = (e.clientY + window.scrollY) + "px";
+});
+
+function renderProjects(projects) {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+
+  projects.forEach(p => {
+    const li = document.createElement("li");
+    li.className = "project-card";
+
+    li.innerHTML = `
+      <div class="card-top">
+        <span class="card-title">${p.title}</span>
+        <span class="complexity-badge ${p.complexity}">
+          ${capitalize(p.complexity)}
+        </span>
+      </div>
+      <p class="card-desc">${p.description}</p>
+    `;
+
+    grid.appendChild(li);
+  });
+}
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function filterComplexity(level) {
+  document.querySelectorAll(".project-card").forEach(card => {
+    const badge = card.querySelector(".complexity-badge");
+    card.style.display = (level === "all" || badge.classList.contains(level)) ? "block" : "none";
+  });
+}
