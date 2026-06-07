@@ -1,0 +1,8 @@
+{
+  "title": "Balloon Pop",
+  "description": "A neon cyberpunk balloon-popping arcade game with procedural float physics, score acceleration, countdown timer, particle burst effects, and localStorage persistence.",
+  "author": { "name": "Girish Madarkar", "github": "Girish0902" },
+  "tags": ["game", "balloon", "arcade", "vanilla-js", "css-animations"],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}
