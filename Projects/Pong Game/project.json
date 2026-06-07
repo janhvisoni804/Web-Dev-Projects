@@ -1,0 +1,8 @@
+{
+  "title": "Pong Game",
+  "description": "A cyberpunk Pong game built with HTML5 Canvas and vanilla JavaScript — segmented paddle deflection physics, adaptive AI with speed damping, first-to-11 scoring, win/loss record via localStorage.",
+  "author": { "name": "Girish Madarkar", "github": "Girish0902" },
+  "tags": ["game", "canvas", "pong", "arcade", "vanilla-js", "ai"],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}
