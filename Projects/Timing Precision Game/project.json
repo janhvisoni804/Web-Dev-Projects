@@ -1,0 +1,16 @@
+{
+  "title": "Timing Precision Game",
+  "description": "An endless survival game testing your reflexes and timing. Stop the moving indicator perfectly inside the target zone to build streaks and rack up a massive high score!",
+  "author": {
+    "name": "MistryVishwa",
+    "github": "MistryVishwa"
+  },
+  "tags": [
+    "game",
+    "timing",
+    "javascript",
+    "arcade"
+  ],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}

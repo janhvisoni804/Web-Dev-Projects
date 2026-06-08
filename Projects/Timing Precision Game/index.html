@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Timing Precision Game</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Game Container to isolate game area -->
+  <div class="game-container">
+    
+    <!-- Screen 1: Main Menu -->
+    <div id="main-menu" class="screen active">
+      <div class="menu-content">
+        <div class="logo-area">
+          <div class="logo-icon-wrapper">
+            <svg class="logo-icon" viewBox="0 0 100 100">
+              <rect x="10" y="45" width="80" height="10" rx="5" fill="#334155"/>
+              <rect x="40" y="35" width="20" height="30" rx="4" fill="var(--primary)" opacity="0.3"/>
+              <line x1="50" y1="30" x2="50" y2="70" stroke="var(--primary)" stroke-width="2" stroke-dasharray="2,2"/>
+              <rect class="cursor-anim" x="46" y="30" width="8" height="40" rx="4" fill="var(--secondary)"/>
+            </svg>
+          </div>
+          <h1>Timing Precision</h1>
+          <p class="subtitle">Test your reflexes & consistency</p>
+        </div>
+
+        <div class="menu-actions">
+          <button class="btn btn-primary btn-huge" onclick="startGame()">
+            <span>▶ Play Now</span>
+          </button>
+          <button class="btn btn-outline" onclick="showLeaderboards()">
+            <span>🏆 Leaderboards</span>
+          </button>
+        </div>
+        
+        <p class="controls-hint">Tap screen or press SPACE to stop the cursor.</p>
+      </div>
+    </div>
+
+    <!-- Screen 2: Gameplay Area -->
+    <div id="game-screen" class="screen">
+      <!-- HUD -->
+      <div class="hud">
+        <div class="hud-left">
+          <button class="icon-btn" onclick="quitGame()" aria-label="Quit Game">✖</button>
+          <div class="lives-container" id="lives-display">
+            <span class="life active">❤️</span>
+            <span class="life active">❤️</span>
+            <span class="life active">❤️</span>
+          </div>
+        </div>
+        <div class="hud-right">
+          <div class="score-display">
+            <span class="score-label">SCORE</span>
+            <span class="score-value" id="current-score">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Streak Multiplier -->
+      <div class="streak-container">
+        <div class="streak-badge" id="streak-badge">
+          x<span id="streak-value">1</span>
+        </div>
+      </div>
+
+      <!-- Central Game Mechanic -->
+      <div class="play-area" id="play-area">
+        
+        <!-- Action Text (Perfect, Good, Miss) -->
+        <div class="action-text-container">
+          <span id="action-text" class="action-text hidden">PERFECT!</span>
+        </div>
+
+        <!-- The Track -->
+        <div class="track-wrapper" id="track-wrapper">
+          <div class="track-line"></div>
+          
+          <!-- The Target Zone -->
+          <div class="target-zone" id="target-zone">
+            <div class="perfect-center"></div>
+          </div>
+          
+          <!-- The Moving Cursor -->
+          <div class="cursor" id="game-cursor">
+            <div class="cursor-glow"></div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Big invisible button for mobile tapping -->
+      <div class="tap-area" id="tap-area"></div>
+    </div>
+
+    <!-- Screen 3: Game Over Modal -->
+    <div id="game-over-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 class="game-over-title">GAME OVER</h2>
+        
+        <div class="final-stats">
+          <div class="stat-row">
+            <span>Final Score</span>
+            <span class="stat-val highlight" id="final-score">0</span>
+          </div>
+          <div class="stat-row">
+            <span>Highest Streak</span>
+            <span class="stat-val" id="highest-streak">x1</span>
+          </div>
+          <div class="stat-row">
+            <span>Perfect Hits</span>
+            <span class="stat-val text-primary" id="perfect-hits">0</span>
+          </div>
+        </div>
+
+        <div class="game-over-actions">
+          <button class="btn btn-primary btn-large w-100 mb-2" onclick="startGame()">Play Again</button>
+          <button class="btn btn-outline w-100" onclick="showMainMenu()">Main Menu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 4: Leaderboards -->
+    <div id="leaderboard-screen" class="screen">
+      <div class="leaderboard-container">
+        <div class="lb-header">
+          <button class="icon-btn btn-back" onclick="showMainMenu()">✖</button>
+          <h2>🏆 Top Scores</h2>
+        </div>
+
+        <div class="lb-content">
+          <ul id="lb-list" class="leaderboard-list">
+            <!-- Populated by JS -->
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- /game-container -->
+
+  <script src="script.js"></script>
+</body>
+</html>
