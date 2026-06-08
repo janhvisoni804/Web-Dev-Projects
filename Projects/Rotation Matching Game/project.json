@@ -1,0 +1,17 @@
+{
+  "title": "Rotation Matching Game",
+  "description": "An interactive drag-to-rotate puzzle game where players match a hidden target angle using precision, timing, and skill.",
+  "entry": "index.html",
+  "author": {
+    "name": "Jagriti",
+    "github": "Jagriti-student"
+  },
+  "tags": [
+    "game",
+    "javascript",
+    "rotation",
+    "puzzle",
+    "frontend"
+  ],
+  "difficulty": "easy"
+}

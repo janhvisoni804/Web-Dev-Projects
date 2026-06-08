@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rotation Matching Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h1>🎯 Rotation Matching Game</h1>
+
+  <!-- Creative HUD -->
+  <div class="hud">
+    <div class="hud-title">🎮 Mission Control</div>
+    <div class="hud-tip">🧭 Align the shape with the hidden angle</div>
+    <div class="hud-tip">🖱️ Drag to rotate freely</div>
+    <div class="hud-tip">🎯 Click “Check Score” when ready</div>
+    <div class="hud-footer">💡 Closer alignment = higher score</div>
+  </div>
+
+  <p class="hint">💡 Tip: Small movements give better accuracy</p>
+
+  <div class="game-area">
+    <div class="target-ring"></div>
+    <div id="box" class="box"></div>
+  </div>
+
+  <div class="info">
+    <p id="level">Level: 1</p>
+    <p id="result">Start dragging to begin 🎮</p>
+  </div>
+
+  <div class="buttons">
+    <button onclick="checkMatch()">Check Score</button>
+    <button onclick="resetGame()">New Round</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
