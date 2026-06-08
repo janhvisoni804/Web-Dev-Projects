@@ -1,6 +1,7 @@
 {
   "title": "Digital Lock Cracker",
   "description": "Crack a secret code using logical deduction and hints about correct digits and their positions within limited attempts.",
+  "entry": "index.html",
   "author": {
     "name": "Jagriti",
     "github": "Jagriti-student"
