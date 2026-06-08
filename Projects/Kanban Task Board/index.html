@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Task Board</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <div class="topbar-left">
+        <span class="brand">Kanban</span>
+        <span class="brand-sub">Task Board</span>
+      </div>
+      <div class="topbar-center">
+        <span class="stat" id="statTotal">0</span>
+        <span class="stat-label">total</span>
+        <span class="stat-divider"></span>
+        <span class="stat" id="statTodo">0</span>
+        <span class="stat-label">to do</span>
+        <span class="stat-divider"></span>
+        <span class="stat" id="statProgress">0</span>
+        <span class="stat-label">in progress</span>
+        <span class="stat-divider"></span>
+        <span class="stat" id="statDone">0</span>
+        <span class="stat-label">done</span>
+      </div>
+      <div class="topbar-right">
+        <button id="createBtn" class="btn btn-primary">+ Create Task</button>
+      </div>
+    </header>
+
+    <main id="board">
+      <section class="column" data-status="todo">
+        <div class="column-header">
+          <div class="column-title">
+            <span class="dot dot-todo"></span>
+            <span>To Do</span>
+          </div>
+          <span class="column-count" id="countTodo">0</span>
+        </div>
+        <div class="column-body" data-status="todo"></div>
+      </section>
+
+      <section class="column" data-status="in-progress">
+        <div class="column-header">
+          <div class="column-title">
+            <span class="dot dot-progress"></span>
+            <span>In Progress</span>
+          </div>
+          <span class="column-count" id="countProgress">0</span>
+        </div>
+        <div class="column-body" data-status="in-progress"></div>
+      </section>
+
+      <section class="column" data-status="done">
+        <div class="column-header">
+          <div class="column-title">
+            <span class="dot dot-done"></span>
+            <span>Done</span>
+          </div>
+          <span class="column-count" id="countDone">0</span>
+        </div>
+        <div class="column-body" data-status="done"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="modalTitle">Create Task</h2>
+        <button id="modalClose" class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label for="taskTitle">Title</label>
+          <input type="text" id="taskTitle" maxlength="80" placeholder="e.g. Design landing page" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="taskDescription">Description</label>
+          <textarea id="taskDescription" rows="3" maxlength="400" placeholder="Add details…"></textarea>
+        </div>
+        <div class="field">
+          <label>Priority</label>
+          <div class="priority-group" id="priorityGroup">
+            <label class="prio-btn" data-prio="low">
+              <input type="radio" name="priority" value="low" checked> Low
+            </label>
+            <label class="prio-btn" data-prio="medium">
+              <input type="radio" name="priority" value="medium"> Medium
+            </label>
+            <label class="prio-btn" data-prio="high">
+              <input type="radio" name="priority" value="high"> High
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modalCancel" class="btn btn-ghost">Cancel</button>
+        <button id="modalSave" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

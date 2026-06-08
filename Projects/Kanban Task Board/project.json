@@ -1,0 +1,8 @@
+{
+  "title": "Kanban Task Board",
+  "description": "A premium dark-theme Kanban board with native HTML5 Drag & Drop, glassmorphic columns, priority badges, task modal editor with sanitization, and localStorage persistence.",
+  "author": { "name": "Girish Madarkar", "github": "Girish0902" },
+  "tags": ["kanban", "drag-and-drop", "productivity", "localstorage", "vanilla-js"],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}
