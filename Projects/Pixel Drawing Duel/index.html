@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎨 Pixel Drawing Duel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🎨 Pixel Drawing Duel</h1>
+    <button id="startBtn">Start Duel</button>
+    <span id="timer">⏱️ 60s</span>
+  </header>
+
+  <main>
+    <div class="canvas-container">
+      <canvas id="referenceCanvas" width="200" height="200"></canvas>
+      <canvas id="playerCanvas" width="200" height="200"></canvas>
+    </div>
+    <button id="submitBtn">Submit Drawing</button>
+    <div id="result"></div>
+    <div id="leaderboard"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "slug": "Pixel Drawing Duel",
+  "title": "Pixel Drawing Duel",
+  "description": "A timed pixel art duel game where players recreate a reference image, compare accuracy, and rank on a leaderboard.",
+  "author": {
+    "name": "Muskankr",
+    "github": "Muskankr"
+  },
+  "tags": ["game", "pixel-art", "javascript", "canvas", "duel"],
+  "entry": "index.html",
+  "folder": "Projects/Pixel Drawing Duel",
+  "thumbnail": "Projects/Pixel Drawing Duel/thumbnail.svg",
+  "addedAt": "2026-06-08T11:30:00.000Z"
+}
