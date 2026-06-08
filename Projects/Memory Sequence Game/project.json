@@ -1,0 +1,15 @@
+{
+  "name": "Memory Sequence Game",
+  "description": "An interactive memory sequence game where players repeat increasing color patterns. Includes animations, sound effects, and high score tracking.",
+  "type": "frontend",
+  "entry": "index.html",
+  "features": [
+    "sequence memory gameplay",
+    "animated UI",
+    "sound effects",
+    "high score tracking",
+    "progressive difficulty"
+  ],
+  "difficulty": "easy",
+  "category": "game"
+}
