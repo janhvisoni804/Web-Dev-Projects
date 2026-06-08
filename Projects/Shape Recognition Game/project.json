@@ -1,0 +1,10 @@
+{
+  "title": "Shape Recognition Game",
+  "description": "A timed shape recognition game where players identify hidden or distorted shapes quickly and accurately, with increasing difficulty and scoring based on speed and accuracy.",
+  "author": {
+    "name": "Muskankr",
+    "github": "Muskankr"
+  },
+  "tags": ["game", "shapes", "javascript", "canvas", "recognition"],
+  "entry": "index.html"
+}
