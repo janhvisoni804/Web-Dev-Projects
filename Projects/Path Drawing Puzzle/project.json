@@ -1,0 +1,10 @@
+{
+  "title": "Path Drawing Puzzle",
+  "description": "A memory-based puzzle game where players recreate displayed paths, scored on precision and speed, with progressively harder layouts.",
+  "author": {
+    "name": "Muskankr",
+    "github": "Muskankr"
+  },
+  "tags": ["game", "canvas", "memory", "javascript", "puzzle"],
+  "entry": "index.html"
+}
