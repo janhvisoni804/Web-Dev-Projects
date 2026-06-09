@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Booster</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="left-panel">
+      <div class="panel-title">Telemetry</div>
+      <div class="tele-item"><span class="tel-label">Level</span><span id="telLevel" class="tel-value">1</span></div>
+      <div class="tele-item"><span class="tel-label">Multiplier</span><span id="telMulti" class="tel-value">&times;1.0</span></div>
+      <div class="tele-item"><span class="tel-label">Streak</span><span id="telStreak" class="tel-value">0</span></div>
+      <div class="tele-item"><span class="tel-label">Best</span><span id="telBest" class="tel-value">0</span></div>
+      <div class="tele-item"><span class="tel-label">Score</span><span id="telScore" class="tel-value">0</span></div>
+      <div class="panel-title" style="margin-top:16px">Controls</div>
+      <button id="newBtn" class="btn btn-primary">New Exercise</button>
+      <button id="resetBtn" class="btn btn-ghost">Reset Progress</button>
+    </div>
+
+    <div id="center">
+      <div id="statusBar">
+        <span id="statusText">Press "New Exercise" to begin</span>
+      </div>
+      <div id="gridWrap">
+        <div id="grid"></div>
+      </div>
+    </div>
+
+    <div id="right-panel">
+      <div class="panel-title">History</div>
+      <div id="historyList"></div>
+      <div id="historyEmpty" class="history-empty">No records yet</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

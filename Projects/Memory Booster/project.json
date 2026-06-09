@@ -1,0 +1,8 @@
+{
+  "title": "Memory Booster",
+  "description": "A Simon-says style memory training game with progressive difficulty (4x4 → 5x5 grid), sequence flashing, exploit-safe input locking, scoring with level multiplier, history ledger, and localStorage persistence.",
+  "author": { "name": "Girish Madarkar", "github": "Girish0902" },
+  "tags": ["memory", "game", "cognition", "training", "vanilla-js"],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}
