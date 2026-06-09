@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam Countdown</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="topBar">
+      <div id="brand">Exam Countdown</div>
+      <div id="teleSummary"><span id="totalExams">0</span> exams · <span id="totalPending">0</span> pending milestones</div>
+      <button id="createBtn">+ Create Exam Tracker</button>
+    </header>
+    <main id="deck"></main>
+  </div>
+
+  <div id="modal" class="modal-hidden">
+    <div id="modalOverlay"></div>
+    <div id="modalPanel">
+      <div id="modalHeader">New Exam Tracker</div>
+      <form id="examForm" autocomplete="off">
+        <label class="flabel">Subject</label>
+        <input id="fSubject" type="text" placeholder="e.g. Database Management Systems" maxlength="120">
+        <label class="flabel">Exam Date &amp; Time</label>
+        <input id="fDate" type="datetime-local">
+        <div id="dateAlert" class="alert-hidden">⚠ Selected date is in the past</div>
+        <label class="flabel">Milestones <span class="fsub">(one per line)</span></label>
+        <textarea id="fMilestones" rows="4" placeholder="Chapter 1&#10;Chapter 2&#10;Revision"></textarea>
+        <div id="formActions">
+          <button type="button" id="cancelBtn">Cancel</button>
+          <button type="submit" id="saveBtn">Save Tracker</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

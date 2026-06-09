@@ -1,0 +1,8 @@
+{
+  "title": "Exam Countdown",
+  "description": "A multi-exam countdown tracker with live Days/Hours/Minutes/Seconds counters, nested milestone checklists with progress bars, defensive input validation, localStorage persistence, and seed data for demo.",
+  "author": { "name": "Girish Madarkar", "github": "Girish0902" },
+  "tags": ["exam", "countdown", "productivity", "study", "tracker", "vanilla-js"],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}
