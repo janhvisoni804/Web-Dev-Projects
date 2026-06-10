@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gas Law Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div id="brand">
+        <svg width="28" height="28" viewBox="0 0 28 28">
+          <rect x="2" y="2" width="24" height="24" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+          <circle cx="14" cy="14" r="8" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+          <circle cx="14" cy="14" r="4" fill="none" stroke="#f59e0b" stroke-width="1.2"/>
+          <circle cx="14" cy="14" r="1.5" fill="#10b981"/>
+        </svg>
+        <div class="brand-text">
+          <div class="brand-title">GAS DYNAMICS</div>
+          <div class="brand-sub">Thermodynamic Lab</div>
+        </div>
+      </div>
+
+      <div id="controls">
+        <div class="param-group">
+          <div class="param-row">
+            <div class="param-label">
+              <span>Temperature (T)</span>
+              <span class="param-unit mono" data-display="temperature">300 K</span>
+            </div>
+            <input type="range" class="param-slider" id="slider-temp" min="100" max="1000" step="1" value="300">
+            <div class="param-scale">
+              <span>100 K</span>
+              <span>1000 K</span>
+            </div>
+          </div>
+          <div class="param-row">
+            <div class="param-label">
+              <span>Volume (V)</span>
+              <span class="param-unit mono" data-display="volume">50%</span>
+            </div>
+            <input type="range" class="param-slider" id="slider-vol" min="20" max="100" step="1" value="50">
+            <div class="param-scale">
+              <span>20%</span>
+              <span>100%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="param-group">
+          <div class="param-label" style="margin-bottom:8px">
+            <span>Particle Injector (n)</span>
+            <span class="param-unit mono" id="display-count">100</span>
+          </div>
+          <div class="btn-group">
+            <button class="btn-inject" id="btn-add">ADD (+50)</button>
+            <button class="btn-inject secondary" id="btn-remove">REMOVE (-50)</button>
+          </div>
+        </div>
+
+        <div id="actions">
+          <button id="btn-pause" class="btn-primary">PAUSE SIMULATION</button>
+          <button id="btn-reset" class="btn-secondary">RESET TO STANDARD ATMOSPHERE (STP)</button>
+        </div>
+      </div>
+
+      <div id="telemetry">
+        <div class="telem-header">PRECISION TELEMETRY</div>
+        <div class="telem-cards">
+          <div class="telem-card" id="card-pressure">
+            <div class="telem-card-label">Pressure (P)</div>
+            <div class="telem-card-value mono" id="pressure-value">2.46 atm</div>
+            <div class="telem-card-bar" id="pressure-bar"><div></div></div>
+          </div>
+          <div class="telem-card">
+            <div class="telem-card-label">Volume (V)</div>
+            <div class="telem-card-value mono" id="volume-value">1.50 L</div>
+          </div>
+          <div class="telem-card">
+            <div class="telem-card-label">Particle Count (n)</div>
+            <div class="telem-card-value mono" id="particle-value">100</div>
+          </div>
+          <div class="telem-card">
+            <div class="telem-card-label">Wall Collisions</div>
+            <div class="telem-card-value mono" id="collision-value">0 /s</div>
+            <canvas id="collision-graph" width="296" height="32"></canvas>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main id="viewport">
+      <div id="status-bar">
+        <span class="status-indicator" id="status-dot"></span>
+        <span class="status-text" id="status-text">SYSTEM STATUS: STABLE</span>
+        <span class="status-meta mono" id="status-pressure">P = 2.46 atm</span>
+      </div>
+      <div id="canvas-wrapper">
+        <canvas id="simulation-canvas"></canvas>
+      </div>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

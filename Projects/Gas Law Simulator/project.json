@@ -1,0 +1,17 @@
+{
+  "title": "Gas Law Simulator",
+  "description": "An interactive, high-fidelity thermodynamic laboratory simulator modeling the macroscopic properties of an ideal gas through microscopic particle kinetics. Features real-time parameter controls for temperature, volume, and mole quantities, rigid elastic particle-wall collision physics, and an automated HTML5 Canvas engine that dynamically computes and visualizes system pressure deviations using the Ideal Gas Law.",
+  "entry": "index.html",
+  "tags": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Canvas",
+    "Thermodynamics",
+    "Physics"
+  ],
+  "author": {
+    "name": "Shruti Narsulwar",
+    "github": "shrutiii01"
+  }
+}
