@@ -1,10 +1,18 @@
 {
-"title": "Double Pendulum Chaos Simulator",
-"description": "An ultra-premium, light botanical-themed physics application simulating the chaotic motion lines of coupled pendulums via Runge-Kutta 4 numerical integration, complete with real-time kinetic/potential energy monitoring graphs, continuous fading trail meshes, and raw CSV vector exports.",
-"entry": "index.html",
-"tags": ["Physics", "Chaos-Theory", "Lagrangian-Mechanics", "Simulation", "Interactive-Graphs", "HTML5-Canvas", "Botanical-UI"],
-"author": {
-    "name": "Shruti Narsulwar",
-    "github": "shrutiii01"
-  }
+    "title": "Double Pendulum Chaos Simulator",
+    "description": "An ultra-premium, light botanical-themed physics application simulating the chaotic motion lines of coupled pendulums via Runge-Kutta 4 numerical integration, complete with real-time kinetic/potential energy monitoring graphs, continuous fading trail meshes, and raw CSV vector exports.",
+    "entry": "index.html",
+    "tags": [
+        "Physics",
+        "Chaos-Theory",
+        "Lagrangian-Mechanics",
+        "Simulation",
+        "Interactive-Graphs",
+        "HTML5-Canvas",
+        "Botanical-UI"
+    ],
+    "author": {
+        "name": "Shruti Narsulwar",
+        "github": "shrutiii01"
+    }
 }
