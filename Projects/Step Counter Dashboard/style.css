@@ -1,0 +1,55 @@
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#05060b;color:#cbd5e1;font-family:"SF Mono",Consolas,"Courier New",monospace;min-height:100vh;display:flex;justify-content:center;padding:2vmin}
+#app{width:min(1400px,98vmin);display:flex;flex-direction:column;gap:1.2vmin}
+#teleBar{display:grid;grid-template-columns:repeat(auto-fit,minmax(18vmin,1fr));gap:1vmin}
+.tile{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:1.2vmin;padding:1.8vmin 1.2vmin;display:flex;flex-direction:column;gap:0.3vmin}
+.tile-lbl{font-size:1.4vmin;text-transform:uppercase;letter-spacing:0.3em;color:#475569}
+.tile-val{font-size:3vmin;font-weight:700;letter-spacing:-0.02em}
+.cy{color:#00f0ff}
+.gr{color:#10b981}
+#tilePct{color:#f59e0b}
+#deck{display:grid;grid-template-columns:repeat(auto-fit,minmax(34vmin,1fr));gap:1.2vmin}
+section{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:1.4vmin;padding:2vmin;display:flex;flex-direction:column;gap:1.2vmin}
+.pnl-hd{font-size:1.6vmin;text-transform:uppercase;letter-spacing:0.3em;color:#475569;font-weight:600}
+#formPanel .ctrl{display:flex;flex-direction:column;gap:0.4vmin}
+.ctrl label{font-size:1.4vmin;color:#64748b;text-transform:uppercase;letter-spacing:0.1em}
+.ctrl input{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:0.8vmin;padding:1.2vmin;color:#e2e8f0;font-family:inherit;font-size:1.6vmin;outline:none;transition:border 0.2s}
+.ctrl input:focus{border-color:#00f0ff}
+.ctrl input::placeholder{color:#475569}
+#logBtn{background:rgba(0,240,255,0.06);border:1px solid rgba(0,240,255,0.15);border-radius:0.8vmin;padding:1.2vmin;color:#00f0ff;font-family:inherit;font-size:1.5vmin;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.2em;transition:all 0.2s;margin-top:0.6vmin}
+#logBtn:hover{background:rgba(0,240,255,0.12);box-shadow:0 0 2vmin rgba(0,240,255,0.08)}
+#canvasWrap{position:relative;flex:1;min-height:28vmin;display:flex;align-items:center;justify-content:center}
+#ringCanvas{display:block}
+#chartKey{display:flex;flex-wrap:wrap;gap:1vmin;justify-content:center}
+.key-dot{display:inline-flex;align-items:center;gap:0.4vmin;font-size:1.2vmin;color:#64748b}
+.key-swatch{width:1.2vmin;height:1.2vmin;border-radius:50%;display:inline-block}
+#ledgerPanel{display:flex;flex-direction:column;gap:0.6vmin}
+#ledgerHd{display:flex;justify-content:space-between;align-items:center}
+#ledgerCount{font-size:1.3vmin;color:#64748b}
+#ledgerWrap{flex:1;overflow-y:auto;max-height:44vmin;scrollbar-width:thin;scrollbar-color:rgba(0,240,255,0.15) transparent}
+#ledgerWrap::-webkit-scrollbar{width:0.4vmin}
+#ledgerWrap::-webkit-scrollbar-track{background:transparent}
+#ledgerWrap::-webkit-scrollbar-thumb{background:rgba(0,240,255,0.15);border-radius:0.2vmin}
+#ledgerTable{width:100%;border-collapse:collapse;font-size:1.3vmin}
+#ledgerTable th{position:sticky;top:0;background:#05060b;color:#475569;text-transform:uppercase;letter-spacing:0.15em;padding:0.8vmin 0.6vmin;text-align:left;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04)}
+#ledgerTable th:last-child,#ledgerTable td:last-child{text-align:center}
+#ledgerTable td{padding:0.6vmin;border-bottom:1px solid rgba(255,255,255,0.02);color:#94a3b8}
+#ledgerTable tr:hover td{color:#e2e8f0}
+.badge{display:inline-block;padding:0.2vmin 0.8vmin;border-radius:0.4vmin;font-size:1.1vmin;font-weight:700;letter-spacing:0.05em}
+.badge-p{background:rgba(16,185,129,0.1);color:#10b981;border:1px solid rgba(16,185,129,0.15)}
+.badge-f{background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.15)}
+#footBar{display:flex;gap:1vmin;justify-content:flex-end;padding:0.6vmin 0}
+.foot-btn{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:0.8vmin;padding:1.2vmin 3vmin;color:#64748b;font-family:inherit;font-size:1.4vmin;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.2em}
+.foot-btn:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1);color:#e2e8f0}
+#clearBtn:hover{background:rgba(255,42,95,0.08);border-color:rgba(255,42,95,0.2);color:#ff2a5f}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-0.8vmin)}40%{transform:translateX(0.8vmin)}60%{transform:translateX(-0.5vmin)}80%{transform:translateX(0.5vmin)}}
+.shake{animation:shake 0.35s ease-in-out}
+@media(max-width:720px){
+  #teleBar{grid-template-columns:repeat(2,1fr)}
+  #deck{grid-template-columns:1fr}
+  .tile-val{font-size:4.5vmin}
+  .pnl-hd{font-size:2.4vmin}
+  .ctrl label,.ctrl input,#logBtn{font-size:2.2vmin}
+  #ledgerTable{font-size:2vmin}
+  .foot-btn{font-size:2vmin;padding:1.6vmin 4vmin}
+}
