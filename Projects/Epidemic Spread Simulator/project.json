@@ -1,0 +1,16 @@
+{
+"title": "Epidemic Spread Simulator",
+"description": "An ultra-premium, light botanical-themed interactive epidemiological simulation workspace modeling SIR compartment population dynamics with real-time vector graphing, complete telemetry logs, social distancing attenuations, and raw CSV data exporters.",
+"entry": "index.html",
+"tags": ["HTML",
+    "CSS",
+    "JavaScript",
+    "Color-Theory",
+    "Vector-Interpolation",
+    "Generative-Algorithms"],
+"author": {
+    "name": "Shruti Narsulwar",
+    "github": "shrutiii01"
+  }
+}
+

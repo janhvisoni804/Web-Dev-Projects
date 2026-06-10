@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Epidemic Spread Simulator — Epi-Shield</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="dashboard">
+<aside class="left-panel">
+<div class="brand-header">
+<div class="brand-icon">
+<svg viewBox="0 0 32 32" fill="none">
+<circle cx="16" cy="16" r="14" stroke="#2e7d32" stroke-width="1.5" fill="none"/>
+<path d="M16 6 C20 10 24 14 26 18 C28 22 26 26 22 26 C18 26 16 22 16 22 C16 22 14 26 10 26 C6 26 4 22 6 18 C8 14 12 10 16 6Z" fill="#2e7d32" opacity="0.12"/>
+<path d="M16 10 C18 12 20 15 21 17.5 C22 20 21 22 19 22 C17 22 16 20 16 20 C16 20 15 22 13 22 C11 22 10 20 11 17.5 C12 15 14 12 16 10Z" fill="#2e7d32" opacity="0.25"/>
+<circle cx="16" cy="16" r="2.5" fill="#2e7d32"/>
+</svg>
+</div>
+<div class="brand-text">
+<h1>EPI-SHIELD</h1>
+<h2>Epidemic Spread Simulator</h2>
+</div>
+</div>
+
+<div class="parameter-rack">
+<div class="param-group" data-param="N">
+<div class="param-header">
+<label>Total Population <span class="param-symbol">(N)</span></label>
+<span class="param-value" id="valN">10000</span>
+</div>
+<input type="range" id="sliderN" min="100" max="100000" step="100" value="10000">
+<div class="param-range-labels"><span>100</span><span>100000</span></div>
+</div>
+
+<div class="param-group" data-param="pInf">
+<div class="param-header">
+<label>Infection Probability <span class="param-symbol">(P_inf)</span></label>
+<span class="param-value" id="valPinf">5.0%</span>
+</div>
+<input type="range" id="sliderPinf" min="0" max="100" step="0.5" value="5">
+<div class="param-range-labels"><span>0%</span><span>100%</span></div>
+</div>
+
+<div class="param-group" data-param="gamma">
+<div class="param-header">
+<label>Recovery Rate <span class="param-symbol">(γ)</span></label>
+<span class="param-value" id="valGamma">0.14</span>
+</div>
+<input type="range" id="sliderGamma" min="0.01" max="1.0" step="0.01" value="0.14">
+<div class="param-range-labels"><span>0.01</span><span>1.0</span></div>
+</div>
+
+<div class="param-group" data-param="sigma">
+<div class="param-header">
+<label>Social Distancing <span class="param-symbol">(σ)</span></label>
+<span class="param-value" id="valSigma">0%</span>
+</div>
+<input type="range" id="sliderSigma" min="0" max="100" step="1" value="0">
+<div class="param-range-labels"><span>0% (None)</span><span>100% (Full)</span></div>
+</div>
+
+<div class="param-group" data-param="tMax">
+<div class="param-header">
+<label>Simulation Horizon <span class="param-symbol">(t_max)</span></label>
+<span class="param-value" id="valTMax">150</span>
+</div>
+<input type="range" id="sliderTMax" min="30" max="365" step="1" value="150">
+<div class="param-range-labels"><span>30 days</span><span>365 days</span></div>
+</div>
+</div>
+
+<div class="computed-metrics">
+<div class="metric-row">
+<span class="metric-label">Transmission Rate (β):</span>
+<span class="metric-value" id="valBeta">0.050</span>
+</div>
+<div class="metric-row">
+<span class="metric-label">Basic Repo. Number (R₀):</span>
+<span class="metric-value" id="valR0">0.36</span>
+</div>
+</div>
+
+<div class="telemetry-dashboard">
+<div class="telemetry-card">
+<div class="t-label">I_max</div>
+<div class="t-value" id="teleImax">—</div>
+<div class="t-sub">Peak Infections</div>
+</div>
+<div class="telemetry-card">
+<div class="t-label">Active I(t)</div>
+<div class="t-value" id="teleIt">1</div>
+<div class="t-sub">Current Infections</div>
+</div>
+<div class="telemetry-card">
+<div class="t-label">R₀</div>
+<div class="t-value" id="teleR0">0.36</div>
+<div class="t-sub">Basic Rep. Number</div>
+</div>
+<div class="telemetry-card">
+<div class="t-label">HIT</div>
+<div class="t-value" id="teleHIT">—</div>
+<div class="t-sub">Herd Imm. Threshold</div>
+</div>
+</div>
+
+<div class="action-nodes">
+<button class="action-btn run-btn" id="btnRun">
+<svg width="14" height="14" viewBox="0 0 14 14"><polygon points="3,1 13,7 3,13" fill="currentColor"/></svg> RUN
+</button>
+<button class="action-btn pause-btn" id="btnPause">
+<svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="1" width="3.5" height="12" rx="0.8" fill="currentColor"/><rect x="8.5" y="1" width="3.5" height="12" rx="0.8" fill="currentColor"/></svg> PAUSE
+</button>
+<button class="action-btn step-btn" id="btnStep">
+<svg width="14" height="14" viewBox="0 0 14 14"><polygon points="2,1 9,7 2,13" fill="currentColor"/><rect x="10" y="1" width="2.5" height="12" rx="0.6" fill="currentColor"/></svg> STEP
+</button>
+<button class="action-btn reset-btn" id="btnReset">
+<svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1C3.686 1 1 3.686 1 7C1 10.314 3.686 13 7 13C10.314 13 12.5 10.5 12.5 7" stroke="currentColor" stroke-width="1.5" fill="none"/><polygon points="12.5,2 12.5,7 9,4.5" fill="currentColor"/></svg> RESET
+</button>
+<button class="action-btn export-btn" id="btnExport">
+<svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1L7 9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M1 8V12H13V8" stroke="currentColor" stroke-width="1.5" fill="none"/></svg> EXPORT CSV
+</button>
+</div>
+
+<div class="status-banner" id="statusBanner">
+<div class="status-indicator" id="statusIndicator"></div>
+<span id="statusText">AWAITING INITIALIZATION</span>
+</div>
+</aside>
+
+<main class="right-panel">
+<div class="analytics-header">
+<div class="model-state" id="modelState">Model: SIR Compartmental</div>
+<div class="sim-state" id="simState">Day: 0 / 150</div>
+</div>
+
+<div class="chart-wrapper">
+<canvas id="epidemicChart"></canvas>
+</div>
+
+<div class="telemetry-log">
+<table>
+<thead>
+<tr>
+<th>Day (t)</th>
+<th>Susceptible (S)</th>
+<th>Infected (I)</th>
+<th>Recovered (R)</th>
+<th>dI/dt</th>
+</tr>
+</thead>
+<tbody id="telemetryBody"></tbody>
+</table>
+</div>
+</main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
