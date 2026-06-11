@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive System Design Learning Hub</title>
+  <meta name="description" content="Learn core software architecture and system design concepts through visual simulators, quizzes, and tracking modules.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="glow-sphere glow-1"></div>
+  <div class="glow-sphere glow-2"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <svg class="logo-svg" viewBox="0 0 24 24" width="32" height="32">
+          <rect x="2" y="2" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <rect x="16" y="2" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <rect x="9" y="16" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M5 8v4a2 2 0 0 0 2 2h5M19 8v4a2 2 0 0 1-2 2h-3" fill="none" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <h1>Architect<span>Hub</span></h1>
+      </div>
+      
+      <div class="header-actions">
+        <!-- Learning streak flame -->
+        <div class="streak-indicator" id="streak-indicator" title="Daily Learning Streak">
+          <span class="streak-icon">🔥</span>
+          <span class="streak-value" id="streak-val">1 Day</span>
+        </div>
+
+        <!-- Master Progression -->
+        <div class="progress-indicator">
+          <span class="progress-label">Progress</span>
+          <div class="progress-bar-wrapper">
+            <div class="progress-bar" id="master-progress-bar" style="width: 0%"></div>
+          </div>
+          <span class="progress-percentage" id="master-progress-text">0%</span>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Switch Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="moon-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <div class="grid-layout">
+      
+      <!-- Left: Module Navigator -->
+      <aside class="sidebar sidebar-left">
+        <h2 class="sidebar-title">Architecture Modules</h2>
+        <nav class="module-nav" id="module-nav-list">
+          <button class="nav-item active" data-module="load-balancer">
+            <span class="module-num">01</span>
+            <div class="nav-item-body">
+              <h3>Load Balancers</h3>
+              <p>Distribute network traffic</p>
+            </div>
+            <span class="status-dot" id="status-dot-load-balancer"></span>
+          </button>
+
+          <button class="nav-item" data-module="caching">
+            <span class="module-num">02</span>
+            <div class="nav-item-body">
+              <h3>Caching Systems</h3>
+              <p>In-memory data speeds</p>
+            </div>
+            <span class="status-dot" id="status-dot-caching"></span>
+          </button>
+
+          <button class="nav-item" data-module="databases">
+            <span class="module-num">03</span>
+            <div class="nav-item-body">
+              <h3>Databases & Sharding</h3>
+              <p>Scale data storage</p>
+            </div>
+            <span class="status-dot" id="status-dot-databases"></span>
+          </button>
+
+          <button class="nav-item" data-module="cdn">
+            <span class="module-num">04</span>
+            <div class="nav-item-body">
+              <h3>CDNs</h3>
+              <p>Geographic content delivery</p>
+            </div>
+            <span class="status-dot" id="status-dot-cdn"></span>
+          </button>
+
+          <button class="nav-item" data-module="message-queue">
+            <span class="module-num">05</span>
+            <div class="nav-item-body">
+              <h3>Message Queues</h3>
+              <p>Asynchronous decoupled flows</p>
+            </div>
+            <span class="status-dot" id="status-dot-message-queue"></span>
+          </button>
+
+          <button class="nav-item" data-module="microservices">
+            <span class="module-num">06</span>
+            <div class="nav-item-body">
+              <h3>Microservices</h3>
+              <p>Decoupled application nodes</p>
+            </div>
+            <span class="status-dot" id="status-dot-microservices"></span>
+          </button>
+        </nav>
+      </aside>
+
+      <!-- Center: Workbench Area -->
+      <main class="workbench">
+        <!-- Tab Selector -->
+        <div class="tab-header">
+          <div class="module-meta">
+            <h2 id="active-module-title">Load Balancers</h2>
+            <span class="module-badge">System Core</span>
+          </div>
+          <div class="tab-triggers">
+            <button class="tab-trigger active" data-tab="simulator">Interactive Simulator</button>
+            <button class="tab-trigger" data-tab="notes">Study Notes</button>
+            <button class="tab-trigger" data-tab="quiz">Topic Quiz</button>
+          </div>
+        </div>
+
+        <!-- Tab contents wrapper -->
+        <div class="tab-content-container">
+          
+          <!-- Simulator Viewport -->
+          <div class="tab-panel active" id="tab-simulator">
+            <div class="simulator-card card">
+              <div class="simulator-header">
+                <div class="control-group" id="sim-controls-panel">
+                  <!-- Dynamically populated simulator controls -->
+                </div>
+                <div class="sim-actions">
+                  <button class="btn btn-primary btn-glow" id="trigger-sim-btn">Send Request</button>
+                  <button class="btn btn-secondary" id="reset-sim-btn">Reset Sim</button>
+                </div>
+              </div>
+              
+              <!-- Simulation Canvas Frame -->
+              <div class="simulator-canvas" id="sim-viewport">
+                <!-- Inline SVG graphics generated dynamically -->
+              </div>
+              
+              <div class="simulator-status-bar">
+                <span class="status-label">Engine Feed:</span>
+                <span class="status-message" id="sim-status-message">Idle. Select algorithm and click Send Request.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Study Notes Viewport -->
+          <div class="tab-panel" id="tab-notes">
+            <div class="notes-card card card-inner">
+              <div class="notes-header">
+                <h3>Core Principles & Trade-offs</h3>
+                <div class="notes-actions">
+                  <button class="btn-icon-label" id="bookmark-topic-btn">
+                    <span class="bookmark-icon">☆</span>
+                    <span class="bookmark-label">Bookmark</span>
+                  </button>
+                  <button class="btn btn-secondary" id="download-notes-btn">Download Notes</button>
+                </div>
+              </div>
+              
+              <div class="notes-body" id="notes-content">
+                <!-- Dynamically populated study notes -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Topic Quiz Viewport -->
+          <div class="tab-panel" id="tab-quiz">
+            <div class="quiz-card card card-inner">
+              <div class="quiz-progress-bar-wrapper">
+                <div class="quiz-progress-bar" id="quiz-progress" style="width: 0%"></div>
+              </div>
+              
+              <div class="quiz-question-container" id="quiz-content">
+                <!-- Dynamically populated MCQs -->
+              </div>
+              
+              <div class="quiz-navigation">
+                <span class="quiz-question-counter" id="quiz-counter">Question 1 of 3</span>
+                <button class="btn btn-primary" id="quiz-next-btn" disabled>Next Question</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+
+      <!-- Right: Learning Analytics & Badges -->
+      <aside class="sidebar sidebar-right">
+        
+        <!-- Scoreboard / Summary Card -->
+        <section class="card analytics-card">
+          <div class="card-inner">
+            <h3 class="sidebar-section-title">My Dashboard</h3>
+            <div class="stats-grid">
+              <div class="stat-box">
+                <span class="label">Completed</span>
+                <span class="value" id="stats-completed-count">0/6</span>
+              </div>
+              <div class="stat-box">
+                <span class="label">Avg Quiz Score</span>
+                <span class="value" id="stats-avg-score">0%</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bookmarks Section -->
+        <section class="card bookmarks-card">
+          <div class="card-inner">
+            <h3 class="sidebar-section-title">Bookmarked Topics</h3>
+            <ul class="bookmarks-list" id="bookmarks-ul">
+              <!-- Dynamically populated list of bookmarks -->
+              <li class="empty-bookmark-msg">No bookmarked topics yet.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section class="card achievements-card">
+          <div class="card-inner">
+            <h3 class="sidebar-section-title">Unlocked Badges</h3>
+            <div class="badges-grid" id="badges-container">
+              <!-- Dynamic achievements list -->
+            </div>
+          </div>
+        </section>
+
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Quiz Results Dialog Modal -->
+  <div class="modal-overlay hidden" id="quiz-result-modal">
+    <div class="modal-card scale-in">
+      <div class="card-inner">
+        <h2 class="modal-title">Quiz Finished!</h2>
+        <div class="result-score-wrapper">
+          <div class="result-score-circle">
+            <span class="score-percent" id="modal-result-percent">100%</span>
+            <span class="score-fraction" id="modal-result-fraction">3/3 Correct</span>
+          </div>
+        </div>
+        <p class="modal-feedback-desc" id="modal-result-feedback">Excellent work! You have mastered this system design topic.</p>
+        
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="modal-close-btn">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>ArchitectHub - Interactive System Design Learning Hub &copy; 2026. Made with passion for Web Dev Projects.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
