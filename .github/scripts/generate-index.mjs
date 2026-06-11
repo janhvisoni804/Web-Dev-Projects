@@ -15,7 +15,6 @@ const OUTPUT = join(ROOT, "projects.json");
 const REQUIRED = ["title", "description", "author", "tags", "entry"];
 
 function isTitleCaseWithSpaces(name) {
-  if (name === "frontend-performance-analyzer") return true;
   // Each word starts uppercase, allows digits/spaces, disallows - and _.
   if (/[-_]/.test(name)) return false;
   return name.split(" ").every((w) => /^[A-Z0-9][A-Za-z0-9]*$/.test(w));
@@ -59,10 +58,7 @@ async function main() {
       if (!meta[field]) errors.push(`"${folder}" — project.json missing "${field}".`);
     }
     if (meta.title && meta.title !== folder) {
-      const normalizedTitle = meta.title.toLowerCase().replace(/\s+/g, "-");
-      if (normalizedTitle !== folder) {
-        errors.push(`"${folder}" — project.json title "${meta.title}" must match the folder name.`);
-      }
+      errors.push(`"${folder}" — project.json title "${meta.title}" must match the folder name.`);
     }
     if (meta.author && (!meta.author.name || !meta.author.github)) {
       errors.push(`"${folder}" — author.name and author.github are required.`);
