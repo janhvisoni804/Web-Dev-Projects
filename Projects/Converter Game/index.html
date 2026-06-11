@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Converter Game</title>
+  <meta name="description" content="Convert numbers between Binary, Decimal, Octal, and Hexadecimal with instant results and a dark interface." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section class="app-card">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Converter Game</p>
+          <h1>Number System Converter</h1>
+          <p class="subtitle">Enter a value in one format and get instant results in Binary, Decimal, Octal, and Hexadecimal.</p>
+        </div>
+      </header>
+
+      <label class="field-label" for="inputType">Input format</label>
+      <div class="field-group">
+        <select id="inputType" class="select-input" aria-label="Select input format">
+          <option value="binary">Binary</option>
+          <option value="decimal" selected>Decimal</option>
+          <option value="octal">Octal</option>
+          <option value="hexadecimal">Hexadecimal</option>
+        </select>
+        <input id="numberInput" class="text-input" type="text" placeholder="Enter a value" autocomplete="off" aria-label="Number input" />
+      </div>
+
+      <div class="results-grid" aria-live="polite">
+        <article class="result-card">
+          <p class="result-label">Binary</p>
+          <pre id="binaryOutput" class="result-value">—</pre>
+        </article>
+        <article class="result-card">
+          <p class="result-label">Decimal</p>
+          <pre id="decimalOutput" class="result-value">—</pre>
+        </article>
+        <article class="result-card">
+          <p class="result-label">Octal</p>
+          <pre id="octalOutput" class="result-value">—</pre>
+        </article>
+        <article class="result-card">
+          <p class="result-label">Hexadecimal</p>
+          <pre id="hexOutput" class="result-value">—</pre>
+        </article>
+      </div>
+
+      <p id="feedback" class="feedback">Type a valid value and choose the correct input format.</p>
+      <button id="clearButton" class="btn btn-clear" type="button">Clear</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

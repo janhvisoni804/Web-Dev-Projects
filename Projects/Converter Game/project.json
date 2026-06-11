@@ -1,0 +1,17 @@
+{
+  "title": "Converter Game",
+  "description": "Instantly convert numbers between Binary, Decimal, Octal, and Hexadecimal using a dark-themed interface.",
+  "author": {
+    "name": "Web Dev Projects",
+    "github": "cu-sanjay"
+  },
+  "tags": [
+    "game",
+    "converter",
+    "javascript",
+    "vanilla-js",
+    "dark-mode"
+  ],
+  "entry": "index.html",
+  "thumbnail": null
+}
