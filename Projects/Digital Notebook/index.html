@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Notebook & Secure Journal</title>
+  <meta name="description" content="A secure, client-side digital notebook and private diary with password protection, file uploads, auto-save, and Markdown helpers.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow spheres -->
+  <div class="ambient-glow bg-blue"></div>
+  <div class="ambient-glow bg-purple"></div>
+
+  <!-- Main App Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <circle cx="12" cy="11" r="3" />
+          <path d="M12 14v4" />
+        </svg>
+        <h1>Secure<span>Notebook</span></h1>
+      </div>
+
+      <div class="header-actions">
+        <!-- Upload Notes -->
+        <label for="import-file" class="btn btn-secondary btn-sm" id="btn-import-label" title="Upload Backup JSON or Notes">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+          </svg>Import File
+        </label>
+        <input type="file" id="import-file" accept=".json,.txt" class="hidden">
+
+        <!-- Export Backup -->
+        <button class="btn btn-secondary btn-sm" id="btn-export-backup" title="Save entire notebook as JSON backup">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>Export Backup
+        </button>
+
+        <!-- Lock Control -->
+        <button class="btn btn-purple btn-sm" id="btn-vault-security">
+          🔒 Lock Vault
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Switch Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="moon-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid Workspace -->
+  <main class="main-container">
+    <div class="workspace-layout">
+      
+      <!-- Sidebar Panel: Notes Directory -->
+      <aside class="card sidebar-panel">
+        <div class="card-inner flex-column height-full">
+          <div class="sidebar-header">
+            <button class="btn btn-primary width-full btn-glow" id="btn-new-note">
+              ➕ New Note
+            </button>
+            <div class="search-box-wrapper">
+              <input type="text" id="search-notes" placeholder="🔍 Search notes or tags..." class="text-input">
+            </div>
+          </div>
+
+          <!-- Note Categorizations Filter tabs -->
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-category="all">All</button>
+            <button class="filter-tab" data-category="notes">Notes</button>
+            <button class="filter-tab" data-category="diary">Diary</button>
+            <button class="filter-tab" data-category="work">Work</button>
+          </div>
+
+          <!-- Dynamic list of notes -->
+          <div class="notes-list" id="notes-list-container">
+            <!-- Populated via script -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Panel: Rich Note Editor -->
+      <section class="card editor-panel">
+        <div class="card-inner flex-column height-full">
+          <div class="editor-header" id="editor-header-view">
+            <div class="editor-title-row">
+              <input type="text" id="note-title" placeholder="Untitled Note" class="title-input">
+              
+              <div class="select-category-wrapper">
+                <select id="note-category" class="select-input-sm">
+                  <option value="notes">📝 Notes</option>
+                  <option value="diary">📖 Diary / Journal</option>
+                  <option value="work">💼 Work / Projects</option>
+                  <option value="personal">🏠 Personal</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="editor-meta-row">
+              <input type="text" id="note-tags" placeholder="Tags (comma-separated: diary, work)" class="meta-input">
+              <span class="save-status-indicator" id="save-status">Saved</span>
+            </div>
+          </div>
+
+          <!-- Text Markdown helper Toolbar -->
+          <div class="editor-toolbar">
+            <button class="toolbar-btn" data-action="h1" title="Heading 1"><b>H1</b></button>
+            <button class="toolbar-btn" data-action="h2" title="Heading 2"><b>H2</b></button>
+            <button class="toolbar-btn" data-action="bold" title="BoldText"><b>B</b></button>
+            <button class="toolbar-btn" data-action="italic" title="ItalicText"><i>I</i></button>
+            <button class="toolbar-btn" data-action="code" title="Code Block"><code>&lt;/&gt;</code></button>
+            <button class="toolbar-btn" data-action="list" title="Bullet List">⚫ List</button>
+            <button class="toolbar-btn" data-action="todo" title="Todo Checklist">☑️ Todo</button>
+            <div class="toolbar-divider"></div>
+            <button class="toolbar-btn btn-danger-sm" id="btn-delete-note" title="Delete current note">🗑️ Delete</button>
+            <button class="toolbar-btn btn-secondary-sm" id="btn-export-txt" title="Download note as TXT">📥 TXT</button>
+          </div>
+
+          <!-- Main Writing Area -->
+          <div class="editor-content-wrapper">
+            <textarea id="note-body" placeholder="Write your journal or notes here... (Supports simple markdown)" class="textarea-body"></textarea>
+          </div>
+
+          <!-- Stats footer -->
+          <div class="editor-footer">
+            <span class="stats-counter" id="note-stats">0 words | 0 characters</span>
+            <span class="date-updated" id="note-date">Updated: Just now</span>
+          </div>
+
+          <!-- Empty state overlay -->
+          <div class="empty-state-overlay" id="empty-state">
+            <div class="empty-content">
+              <div class="empty-icon">📂</div>
+              <h3>No Note Selected</h3>
+              <p>Select an existing note from the sidebar directory, or click "New Note" to start writing securely.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Lock / Set Password Vault overlay Modal -->
+  <div class="overlay" id="vault-overlay">
+    <div class="card vault-modal">
+      <div class="card-inner">
+        <div class="vault-icon-circle">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+
+        <h2 class="vault-modal-title" id="vault-title">Vault Locked</h2>
+        <p class="vault-modal-desc" id="vault-desc">Enter your notebook password to access your private notes.</p>
+        
+        <!-- Input fields depending on set/unset password status -->
+        <div class="vault-input-group">
+          <input type="password" id="vault-password-input" placeholder="Password" class="text-input width-full text-center">
+          <div class="vault-confirm-group hidden" id="vault-confirm-row">
+            <input type="password" id="vault-confirm-input" placeholder="Confirm Password" class="text-input width-full text-center margin-top-sm">
+          </div>
+          <div class="error-msg hidden" id="vault-error-msg">Incorrect Password. Try again.</div>
+        </div>
+
+        <div class="vault-modal-actions">
+          <button class="btn btn-primary width-full" id="btn-vault-submit">Unlock Vault</button>
+          <button class="btn btn-secondary width-full margin-top-sm hidden" id="btn-vault-skip">Continue Unprotected (No Password)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <p>Secure Digital Notebook &copy; 2026. Data encrypted locally inside your browser cache.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

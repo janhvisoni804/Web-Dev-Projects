@@ -1,0 +1,16 @@
+{
+  "title": "Digital Notebook",
+  "description": "A secure digital notebook and journal web application with local storage persistence, password-protected vaults, quick note uploading/exporting, and markdown preview.",
+  "author": {
+    "name": "Priya Kalamkar",
+    "github": "priyakalamkar555-art"
+  },
+  "tags": [
+    "diary",
+    "password",
+    "notes",
+    "css"
+  ],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}
