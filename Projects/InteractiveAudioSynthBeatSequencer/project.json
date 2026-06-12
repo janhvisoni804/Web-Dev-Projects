@@ -1,5 +1,5 @@
 {
-  "title": "Interactive Audio Synth Beat Sequencer",
+  "title": "InteractiveAudioSynthBeatSequencer",
   "description": "A premium interactive audio synthesizer and step sequencer featuring customizable ADSR envelopes, filter controls, an 8-channel grid editor, real-time canvas visualizers, piano keys, and JSON pattern presets.",
   "author": {
     "name": "Priya Kalamkar",
