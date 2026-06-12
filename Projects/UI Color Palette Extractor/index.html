@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI Color Palette Extractor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<header class="app-header">
+<div class="brand">
+<svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="#5c6bc0" stroke-width="1.5" fill="none"/><circle cx="10" cy="10" r="4" fill="#5c6bc0" opacity="0.6"/><circle cx="18" cy="16" r="3" fill="#7c4dff" opacity="0.5"/><circle cx="14" cy="20" r="2" fill="#448aff" opacity="0.4"/></svg>
+<h1>UI Color Palette Extractor</h1>
+</div>
+<p class="subtitle">Extract dominant color palettes from any image</p>
+</header>
+
+<main class="main-content">
+<div class="upload-zone" id="uploadZone">
+<svg width="48" height="48" viewBox="0 0 48 48"><path d="M24 6L24 30M24 6L16 14M24 6L32 14" stroke="#5c6bc0" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M8 28V38H40V28" stroke="#5c6bc0" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+<p class="upload-text">Drop an image here or <span class="upload-link">browse</span></p>
+<p class="upload-hint">Supports JPG, PNG, WEBP</p>
+<input type="file" id="fileInput" accept="image/*" hidden>
+</div>
+
+<div class="workspace" id="workspace" style="display:none">
+<div class="preview-section">
+<h2>Source Image</h2>
+<div class="image-wrapper">
+<img id="previewImage" alt="Uploaded image">
+</div>
+</div>
+
+<div class="palette-section">
+<div class="palette-header">
+<h2>Extracted Palette</h2>
+<div class="palette-controls">
+<label class="count-label">Colors:
+<select id="colorCount">
+<option value="5">5</option>
+<option value="8" selected>8</option>
+<option value="12">12</option>
+<option value="16">16</option>
+</select>
+</label>
+<button class="btn-export" id="btnExport">Export CSS</button>
+</div>
+</div>
+<div class="palette-grid" id="paletteGrid"></div>
+</div>
+</div>
+</main>
+
+<div class="toast" id="toast"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

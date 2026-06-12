@@ -1,0 +1,17 @@
+{
+  "title": "Challenge Game",
+  "description": "A game that challenges the player to complete a task within a time limit, testing their skills and reflexes.",
+  "author": {
+    "name": "   Priya Kalamkar",
+    "github": "priyakalamkar555-art"
+  },
+  "tags": [
+    "challenge",
+    "game",
+    "memory",
+    "javascript",
+    "vanilla-js"
+  ],
+  "entry": "index.html",
+  "thumbnail": null
+}

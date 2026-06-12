@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2D Physics Engine Particle Sandbox & Collision Simulator</title>
+  <meta name="description" content="Simulate gravity, bounciness, elastic particle collisions, and custom barriers in real-time using HTML5 Canvas.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow spheres -->
+  <div class="ambient-glow bg-purple"></div>
+  <div class="ambient-glow bg-cyan"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 3v18M3 12h18M7.5 7.5l9 9M16.5 7.5l-9 9" opacity="0.3"/>
+          <circle cx="12" cy="12" r="3" fill="currentColor"/>
+        </svg>
+        <h1>Physics<span>Sandbox</span></h1>
+      </div>
+
+      <div class="header-actions">
+        <!-- Simulation Control -->
+        <button class="btn btn-primary btn-sm" id="btn-toggle-sim">⏸ Pause</button>
+        <button class="btn btn-secondary btn-sm" id="btn-step-sim" title="Advance by 1 frame">➡️ Step</button>
+        
+        <div class="preset-wrapper">
+          <select id="preset-selector" class="select-input-sm">
+            <option value="none" selected>Select Preset Layout</option>
+            <option value="cradle">Newton's Cradle</option>
+            <option value="pachinko">Plinko Pachinko</option>
+            <option value="chaos">Orbital Chaos (Zero-G)</option>
+          </select>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme" title="Switch Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="moon-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="main-container">
+    <div class="workspace-layout">
+      
+      <!-- Left Controls Panel -->
+      <section class="card config-panel">
+        <div class="card-inner">
+          
+          <!-- Section 1: Physics Engine Parameters -->
+          <h2 class="panel-section-title">Engine Properties</h2>
+          
+          <div class="slider-wrapper">
+            <label for="slider-gravity-y">Gravity Y: <span id="val-gravity-y">9.8</span> m/s²</label>
+            <input type="range" id="slider-gravity-y" min="-25" max="25" step="0.5" value="9.8">
+          </div>
+
+          <div class="slider-wrapper">
+            <label for="slider-gravity-x">Gravity X: <span id="val-gravity-x">0</span> m/s²</label>
+            <input type="range" id="slider-gravity-x" min="-25" max="25" step="0.5" value="0">
+          </div>
+
+          <div class="slider-wrapper">
+            <label for="slider-restitution">Restitution (Bounciness): <span id="val-restitution">0.75</span></label>
+            <input type="range" id="slider-restitution" min="0" max="1" step="0.05" value="0.75">
+          </div>
+
+          <div class="slider-wrapper">
+            <label for="slider-friction">Air Friction: <span id="val-friction">0.01</span></label>
+            <input type="range" id="slider-friction" min="0" max="0.1" step="0.005" value="0.01">
+          </div>
+
+          <div class="slider-wrapper">
+            <label for="slider-stiffness">Spring Stiffness: <span id="val-stiffness">0.05</span></label>
+            <input type="range" id="slider-stiffness" min="0.01" max="0.3" step="0.01" value="0.05">
+          </div>
+
+          <hr class="divider">
+
+          <!-- Section 2: Spawn settings -->
+          <h2 class="panel-section-title">Spawn Config</h2>
+          
+          <div class="slider-wrapper">
+            <label for="slider-radius">Radius Size: <span id="val-radius">20</span> px</label>
+            <input type="range" id="slider-radius" min="8" max="45" step="1" value="20">
+          </div>
+
+          <div class="slider-wrapper">
+            <label for="slider-mass">Particle Mass: <span id="val-mass">2</span> kg</label>
+            <input type="range" id="slider-mass" min="0.5" max="15" step="0.5" value="2">
+          </div>
+
+          <div class="input-group">
+            <label>Color</label>
+            <div class="color-palette-grid">
+              <button class="color-btn active" data-color="#8b5cf6" style="background-color: #8b5cf6;" title="Purple"></button>
+              <button class="color-btn" data-color="#06b6d4" style="background-color: #06b6d4;" title="Cyan"></button>
+              <button class="color-btn" data-color="#f43f5e" style="background-color: #f43f5e;" title="Rose"></button>
+              <button class="color-btn" data-color="#eab308" style="background-color: #eab308;" title="Amber"></button>
+              <button class="color-btn" data-color="#10b981" style="background-color: #10b981;" title="Emerald"></button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Center Simulator Viewport -->
+      <section class="simulator-viewport">
+        
+        <!-- Canvas drawing tools HUD -->
+        <div class="hud-tools-card card">
+          <div class="card-inner flex-row justify-between align-center">
+            
+            <div class="tools-buttons">
+              <button class="tool-btn active" id="tool-spawn" title="Spawn Particles on Canvas click">🔴 Spawn</button>
+              <button class="tool-btn" id="tool-wall" title="Click & Drag to draw solid slide walls">🧱 Wall Line</button>
+              <button class="tool-btn" id="tool-spring" title="Drag between two particles to bind with spring">🔗 Spring Cord</button>
+              <button class="tool-btn" id="tool-select" title="Grab & throw items around">🤝 Slingshot</button>
+            </div>
+
+            <div class="hud-action-triggers">
+              <button class="btn btn-secondary btn-sm" id="btn-clear-particles">🗑️ Clear Particles</button>
+              <button class="btn btn-secondary btn-sm" id="btn-clear-walls">🗑️ Clear Walls</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Canvas Card -->
+        <div class="card canvas-card">
+          <div class="card-inner flex-center relative-pos">
+            <canvas id="physics-canvas" width="720" height="420"></canvas>
+            
+            <!-- Float statistics HUD -->
+            <div class="canvas-hud-stats">
+              <span>FPS: <b id="stat-fps">60</b></span>
+              <span>Particles: <b id="stat-particles">0</b></span>
+              <span>Barriers: <b id="stat-barriers">0</b></span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <p>Physics Engine Sandbox &copy; 2026. Rendered with vector gravity calculus and conservation of momentum.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

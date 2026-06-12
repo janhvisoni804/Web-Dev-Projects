@@ -1,0 +1,17 @@
+{
+  "title": "RetroCpuSimulator",
+  "description": "An interactive 16-bit stack-machine Virtual Machine and Assembly compiler. Model CPU registers, call stack, and memory buffers step-by-step.",
+  "author": {
+    "name": "MistryVishwa",
+    "github": "VishwaMistry"
+  },
+  "tags": [
+    "simulation",
+    "low-level",
+    "educational",
+    "javascript",
+    "css"
+  ],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}

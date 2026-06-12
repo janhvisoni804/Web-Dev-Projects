@@ -1,0 +1,16 @@
+{
+  "title": "PhysicsEngineSandbox",
+  "description": "An interactive 2D canvas physics sandbox and particle collision engine. Draw static line barriers, connect particles with elastic spring tethers, adjust gravity and bounciness sliders, and watch real-time vector collision physics.",
+  "author": {
+    "name": "MistryVishwa",
+    "github": "VishwaMistry"
+  },
+  "tags": [
+    "canvas",
+    "physics",
+    "math",
+    "interactive"
+  ],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}

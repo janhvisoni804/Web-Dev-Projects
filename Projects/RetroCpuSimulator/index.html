@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro CPU Bytecode Virtual Machine & Assembler Simulator</title>
+  <meta name="description" content="Simulate a 16-bit stack-machine Virtual Machine and Assembly compiler. Model CPU registers, stack pointers, VRAM, and RAM memory arrays.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Neon ambient glow spheres -->
+  <div class="ambient-glow bg-amber"></div>
+  <div class="ambient-glow bg-emerald"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
+          <rect x="2" y="2" width="20" height="20" rx="4" stroke-dasharray="4 2"/>
+          <path d="M6 12h12M12 6v12M9 9h6v6H9z" fill="currentColor" opacity="0.2"/>
+        </svg>
+        <h1>RetroCPU<span>16-bit VM</span></h1>
+      </div>
+
+      <div class="header-actions">
+        <!-- Simulation State Actions -->
+        <button class="btn btn-primary btn-sm" id="btn-toggle-run">▶ Run</button>
+        <button class="btn btn-secondary btn-sm" id="btn-step" title="Step next clock instruction">➡️ Step</button>
+        <button class="btn btn-secondary btn-sm" id="btn-reset">🔄 Reset</button>
+
+        <div class="hz-control">
+          <label for="slider-hz">Speed: <span id="val-hz">5</span> Hz</label>
+          <input type="range" id="slider-hz" min="1" max="60" value="5" step="1">
+        </div>
+
+        <div class="preset-wrapper">
+          <select id="preset-selector" class="select-input-sm">
+            <option value="fibonacci" selected>Preset: Fibonacci Sequence</option>
+            <option value="multiplier">Preset: Simple Multiplier</option>
+            <option value="led-draw">Preset: LED Matrix Bounce</option>
+          </select>
+        </div>
+
+        <!-- Light/Dark Mode -->
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="moon-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Workspace Grid Layout -->
+  <main class="main-container">
+    <div class="workspace-layout">
+
+      <!-- Left Column: Source Assembly Code Editor -->
+      <section class="card editor-card">
+        <div class="card-inner">
+          <div class="card-header justify-between">
+            <h2>Assembly Compiler</h2>
+            <button class="btn btn-accent btn-sm" id="btn-assemble">🔨 Assemble Code</button>
+          </div>
+
+          <div class="editor-container">
+            <div class="line-numbers" id="line-numbers">1</div>
+            <textarea id="assembly-editor" spellcheck="false" placeholder="; Write Assembly code here..."></textarea>
+          </div>
+
+          <div class="console-box">
+            <h3>Compiler Output / Console</h3>
+            <pre id="console-output">Virtual Machine ready. Assemble code to load RAM.</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Center Column: Core CPU state and Visual Stack -->
+      <section class="cpu-monitor-section">
+        
+        <!-- CPU Registers visual row -->
+        <div class="card registers-card">
+          <div class="card-inner">
+            <h2>CPU Registers & Flags</h2>
+            <div class="registers-grid">
+              <div class="reg-box">
+                <span class="reg-label">Accumulator (ACC)</span>
+                <span class="reg-val" id="reg-acc">0x0000</span>
+                <span class="reg-dec" id="reg-acc-dec">(0)</span>
+              </div>
+              <div class="reg-box">
+                <span class="reg-label">Program Counter (PC)</span>
+                <span class="reg-val" id="reg-pc">0x0000</span>
+                <span class="reg-dec" id="reg-pc-dec">(0)</span>
+              </div>
+              <div class="reg-box">
+                <span class="reg-label">Stack Pointer (SP)</span>
+                <span class="reg-val" id="reg-sp">0x00FF</span>
+                <span class="reg-dec" id="reg-sp-dec">(255)</span>
+              </div>
+            </div>
+
+            <div class="flags-row">
+              <div class="flag-item" id="flag-z">
+                <span class="flag-indicator"></span>
+                <span class="flag-name">Zero (Z)</span>
+              </div>
+              <div class="flag-item" id="flag-c">
+                <span class="flag-indicator"></span>
+                <span class="flag-name">Carry (C)</span>
+              </div>
+              <div class="flag-item" id="flag-n">
+                <span class="flag-indicator"></span>
+                <span class="flag-name">Negative (N)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual stack frame flow -->
+        <div class="card stack-card">
+          <div class="card-inner">
+            <h2>Hardware Stack Frame (SP Focus)</h2>
+            <div class="stack-view-container">
+              <div class="stack-list" id="stack-visualizer">
+                <!-- Stack memory cells rendered dynamically -->
+                <div class="stack-empty-msg">Stack is empty</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Column: Screen VRAM monitor & Instructions table -->
+      <section class="peripherals-section">
+        
+        <!-- VRAM monitor display -->
+        <div class="card screen-card">
+          <div class="card-inner">
+            <h2>LED Matrix VRAM (0xF0 - 0xF7)</h2>
+            <div class="vram-grid-wrapper">
+              <div class="led-screen" id="led-screen">
+                <!-- 8x8 LED display matrix rows -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Reference Cheat sheet -->
+        <div class="card reference-card">
+          <div class="card-inner">
+            <h2>Instruction Reference</h2>
+            <div class="table-scroll">
+              <table class="reference-table">
+                <thead>
+                  <tr>
+                    <th>Instruction</th>
+                    <th>Opcode</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>PUSH val</code></td>
+                    <td>0x01</td>
+                    <td>Push immediate value onto Stack</td>
+                  </tr>
+                  <tr>
+                    <td><code>POP</code></td>
+                    <td>0x02</td>
+                    <td>Pop top of Stack into ACC</td>
+                  </tr>
+                  <tr>
+                    <td><code>ADD</code></td>
+                    <td>0x03</td>
+                    <td>Pop 2 values, push sum (x + y)</td>
+                  </tr>
+                  <tr>
+                    <td><code>SUB</code></td>
+                    <td>0x04</td>
+                    <td>Pop 2 values, push diff (x - y)</td>
+                  </tr>
+                  <tr>
+                    <td><code>LOAD addr</code></td>
+                    <td>0x05</td>
+                    <td>Push value at RAM address to Stack</td>
+                  </tr>
+                  <tr>
+                    <td><code>STORE addr</code></td>
+                    <td>0x06</td>
+                    <td>Pop value, store to RAM address</td>
+                  </tr>
+                  <tr>
+                    <td><code>JMP addr</code></td>
+                    <td>0x08</td>
+                    <td>Jump to address</td>
+                  </tr>
+                  <tr>
+                    <td><code>JZ addr</code></td>
+                    <td>0x09</td>
+                    <td>Pop value, jump if it is Zero</td>
+                  </tr>
+                  <tr>
+                    <td><code>JNZ addr</code></td>
+                    <td>0x0A</td>
+                    <td>Pop value, jump if it is NOT Zero</td>
+                  </tr>
+                  <tr>
+                    <td><code>DUP</code></td>
+                    <td>0x0B</td>
+                    <td>Duplicate top of Stack value</td>
+                  </tr>
+                  <tr>
+                    <td><code>MUL</code></td>
+                    <td>0x0C</td>
+                    <td>Pop 2 values, push product (x * y)</td>
+                  </tr>
+                  <tr>
+                    <td><code>HALT</code></td>
+                    <td>0x12</td>
+                    <td>Stop simulation clock execution</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- Bottom Full Width: Main RAM hex viewer layout -->
+    <section class="card ram-card">
+      <div class="card-inner">
+        <div class="card-header justify-between">
+          <h2>RAM Memory Map Buffer (256 Words / 16-bit Hex)</h2>
+          <div class="ram-legend">
+            <span class="legend-color legend-code"></span> Code / Data
+            <span class="legend-color legend-stack"></span> Stack Memory
+            <span class="legend-color legend-vram"></span> VRAM Matrix
+          </div>
+        </div>
+        
+        <div class="ram-view-grid" id="ram-view-grid">
+          <!-- 16x16 memory map cells dynamically injected -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Retro CPU 16-Bit Stack Machine Interpreter &copy; 2026. Made with custom Assembly Assembler and clock cycle scheduler.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

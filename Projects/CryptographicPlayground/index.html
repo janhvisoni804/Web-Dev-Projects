@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cryptographic Cipher Playground & Brute-Force Visualizer</title>
+  <meta name="description" content="Explore cryptographic algorithms like Caesar, Vigenère, Diffie-Hellman, and Simple AES alongside real-time password brute-force cracking simulations.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow spheres -->
+  <div class="ambient-glow bg-amber"></div>
+  <div class="ambient-glow bg-cyan"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <h1>Crypto<span>Playground</span></h1>
+      </div>
+
+      <div class="header-actions">
+        <!-- Preset Algorithm Loaders -->
+        <div class="preset-wrapper">
+          <label for="select-algo">Algorithm</label>
+          <select id="select-algo" class="select-input-sm">
+            <option value="caesar" selected>Caesar Cipher</option>
+            <option value="vigenere">Vigenère Cipher</option>
+            <option value="diffie">Diffie-Hellman Exchange</option>
+            <option value="aes">Simple AES Matrix</option>
+          </select>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="moon-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Workspace Grid Layout -->
+  <main class="main-container">
+    <div class="workspace-layout">
+
+      <!-- Left Column: Encryption Inputs -->
+      <section class="card input-card">
+        <div class="card-inner">
+          <h2>Cipher Inputs</h2>
+          
+          <div class="input-group">
+            <label for="input-plaintext">Plaintext Message</label>
+            <textarea id="input-plaintext" placeholder="Type secret text here...">ATTACK AT DAWN</textarea>
+          </div>
+
+          <!-- Caesar offset configs -->
+          <div class="algo-config" id="config-caesar">
+            <div class="slider-wrapper">
+              <label for="slider-shift">Caesar Shift: <span id="val-shift">3</span></label>
+              <input type="range" id="slider-shift" min="1" max="25" value="3">
+            </div>
+          </div>
+
+          <!-- Vigenere offset configs -->
+          <div class="algo-config hidden" id="config-vigenere">
+            <div class="input-group">
+              <label for="input-key-vigenere">Key Phrase</label>
+              <input type="text" id="input-key-vigenere" class="text-input" value="LEMON" maxlength="15">
+            </div>
+          </div>
+
+          <!-- Diffie-Hellman private numbers -->
+          <div class="algo-config hidden" id="config-diffie">
+            <div class="input-group">
+              <label for="input-dh-alice">Alice Private Key ($a$)</label>
+              <input type="number" id="input-dh-alice" class="text-input" value="6" min="1">
+            </div>
+            <div class="input-group">
+              <label for="input-dh-bob">Bob Private Key ($b$)</label>
+              <input type="number" id="input-dh-bob" class="text-input" value="15" min="1">
+            </div>
+          </div>
+
+          <!-- AES key configuration -->
+          <div class="algo-config hidden" id="config-aes">
+            <div class="input-group">
+              <label for="input-key-aes">16-Byte Hex Key</label>
+              <input type="text" id="input-key-aes" class="text-input" value="2b7e151628aed2a6" maxlength="16">
+            </div>
+          </div>
+
+          <button class="btn btn-primary w-full" id="btn-encrypt">🔐 Scramble Message</button>
+
+          <hr class="divider">
+
+          <div class="input-group">
+            <label for="output-ciphertext">Ciphertext Result</label>
+            <pre class="console-box" id="output-ciphertext">-</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Center Column: Calculations visual step trace -->
+      <section class="visualizer-section">
+        <div class="card visualizer-card">
+          <div class="card-inner">
+            <div class="card-header justify-between">
+              <h2>Algorithm Trace Map</h2>
+              <span class="badge" id="trace-badge">Caesar</span>
+            </div>
+
+            <div class="trace-viewport" id="trace-viewport">
+              <!-- Render details dynamically -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Password Cracker simulation -->
+      <section class="cracker-section">
+        <div class="card cracker-card">
+          <div class="card-inner">
+            <h2>Brute-Force Simulator</h2>
+            
+            <div class="input-group">
+              <label for="input-crack-pass">Target Password</label>
+              <div class="flex-row gap-8">
+                <input type="text" id="input-crack-pass" class="text-input" value="LOCK" maxlength="10">
+                <button class="btn btn-accent btn-sm" id="btn-crack-start">⚡ Crack</button>
+              </div>
+            </div>
+
+            <!-- The Matrix rolling characters box -->
+            <div class="rolling-board">
+              <div class="rolling-characters" id="rolling-board-grid">
+                <!-- guess frames -->
+              </div>
+              <div class="brute-progress-bar">
+                <div class="brute-progress-fill" id="brute-progress-fill"></div>
+              </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="analytics-metrics">
+              <div class="metric-row">
+                <span>Entropy Space</span>
+                <span id="metric-entropy">0 bits</span>
+              </div>
+              <div class="metric-row">
+                <span>Combinations</span>
+                <span id="metric-combinations">0</span>
+              </div>
+              <div class="metric-row">
+                <span>Keys Checked</span>
+                <span id="metric-checked">0</span>
+              </div>
+              <div class="metric-row">
+                <span>Crack Speed</span>
+                <span id="metric-speed">0 keys/s</span>
+              </div>
+              <div class="metric-row highlight-row">
+                <span>Time Estimate</span>
+                <span id="metric-time">0.00s</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <p>Cryptographic Cipher Playground &copy; 2026. Made with byte substitutions and public key parameters.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

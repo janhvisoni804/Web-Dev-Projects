@@ -1,0 +1,16 @@
+{
+  "title": "CryptographicPlayground",
+  "description": "An interactive cryptography simulator featuring Caesar, Vigenère, Diffie-Hellman color mixing exchange, simple AES round traces, and a real-time password brute-force cracking estimator.",
+  "author": {
+    "name": "MistryVishwa",
+    "github": "VishwaMistry"
+  },
+  "tags": [
+    "security",
+    "math",
+    "interactive",
+    "educational"
+  ],
+  "entry": "index.html",
+  "thumbnail": "thumbnail.svg"
+}

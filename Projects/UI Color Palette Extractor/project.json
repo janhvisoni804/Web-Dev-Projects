@@ -1,0 +1,16 @@
+{
+    "title": "UI Color Palette Extractor",
+    "description": "Extract dominant color palettes from any image with hex and RGB values. Supports drag-and-drop upload, variable palette sizes, and CSS export.",
+    "entry": "index.html",
+    "tags": [
+        "Color",
+        "Design",
+        "UI",
+        "Palette",
+        "Image-Processing"
+    ],
+    "author": {
+        "name": "Shruti Narsulwar",
+        "github": "shrutiii01"
+    }
+}

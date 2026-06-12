@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Turing Machine & Automata Compiler Simulator</title>
+  <meta name="description" content="Design and simulate Deterministic Finite Automata (DFA), Pushdown Automata (PDA), and Turing Machines in real-time with an interactive graph editor.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient glow overlays -->
+  <div class="ambient-glow bg-cyan"></div>
+  <div class="ambient-glow bg-purple"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M7 12h10M12 7l5 5-5 5" stroke-linecap="round"/>
+        </svg>
+        <h1>Automata<span>Simulator</span></h1>
+      </div>
+
+      <div class="header-actions">
+        <!-- Simulation controls -->
+        <button class="btn btn-primary btn-sm" id="btn-toggle-run">▶ Run</button>
+        <button class="btn btn-secondary btn-sm" id="btn-step" title="Advance by 1 state transition">➡️ Step</button>
+        <button class="btn btn-secondary btn-sm" id="btn-reset">🔄 Reset</button>
+
+        <div class="hz-control">
+          <label for="slider-hz">Speed: <span id="val-hz">3</span> Hz</label>
+          <input type="range" id="slider-hz" min="1" max="15" value="3" step="1">
+        </div>
+
+        <div class="preset-wrapper">
+          <select id="preset-selector" class="select-input-sm">
+            <option value="dfa-even" selected>DFA: Even Zero Count</option>
+            <option value="pda-brackets">PDA: Balanced Brackets</option>
+            <option value="tm-binary">Turing: Binary Incrementer</option>
+          </select>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="moon-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Workspace Grid Layout -->
+  <main class="main-container">
+    <div class="workspace-layout">
+
+      <!-- Left Panel: State Diagram Designer Tools -->
+      <section class="card tools-panel">
+        <div class="card-inner">
+          <h2>Design Toolbox</h2>
+          
+          <div class="tool-buttons">
+            <button class="tool-btn active" id="tool-state" title="Click on canvas to place states">🟢 State Node</button>
+            <button class="tool-btn" id="tool-transition" title="Drag between nodes to create transition rules">🔗 Transition Arrow</button>
+            <button class="tool-btn" id="tool-delete" title="Click element to delete it">❌ Delete Tool</button>
+            <button class="btn btn-secondary btn-sm w-full" id="btn-clear-board">🗑️ Clear Board</button>
+          </div>
+
+          <hr class="divider">
+
+          <div class="instructions-box">
+            <h3>Machine Instructions</h3>
+            <div id="machine-help-text">
+              <strong>DFA Mode</strong>:<br>
+              Validates inputs character by character. State transition matches: <code>input_char</code>.<br>
+              <strong>Double click</strong> a state node to toggle it as the <strong>Accepting/Final state</strong>.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Center: State Diagram visual editor canvas -->
+      <section class="editor-section">
+        <div class="card canvas-card">
+          <div class="card-inner relative-pos">
+            <div class="canvas-header">
+              <h2>Graph Canvas Editor (Active: <span id="machine-title-badge">DFA</span>)</h2>
+            </div>
+            
+            <canvas id="editor-canvas" width="680" height="420"></canvas>
+            
+            <!-- Context editing tooltip overlay -->
+            <div class="context-overlay hidden" id="context-overlay">
+              <div class="overlay-inner">
+                <h4>Edit Transition</h4>
+                <div class="input-row">
+                  <label for="input-read">Read Char</label>
+                  <input type="text" id="input-read" maxlength="1" placeholder="0" class="overlay-input">
+                </div>
+                <div class="input-row hidden" id="pda-pop-row">
+                  <label for="input-pop">Pop Stack</label>
+                  <input type="text" id="input-pop" maxlength="1" placeholder="ε" class="overlay-input">
+                </div>
+                <div class="input-row hidden" id="pda-push-row">
+                  <label for="input-push">Push Stack</label>
+                  <input type="text" id="input-push" maxlength="1" placeholder="ε" class="overlay-input">
+                </div>
+                <div class="input-row hidden" id="tm-write-row">
+                  <label for="input-write">Write Char</label>
+                  <input type="text" id="input-write" maxlength="1" placeholder="B" class="overlay-input">
+                </div>
+                <div class="input-row hidden" id="tm-move-row">
+                  <label for="select-move">Tape Shift</label>
+                  <select id="select-move" class="overlay-select">
+                    <option value="R">Right (R)</option>
+                    <option value="L">Left (L)</option>
+                    <option value="N">None (N)</option>
+                  </select>
+                </div>
+                <div class="flex-row gap-8">
+                  <button class="btn btn-primary btn-sm" id="btn-save-transition">Save</button>
+                  <button class="btn btn-secondary btn-sm" id="btn-cancel-transition">Cancel</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Testing batch string validator & Console traces -->
+      <section class="testing-section">
+        
+        <!-- Batch Test Card -->
+        <div class="card batch-card">
+          <div class="card-inner">
+            <h2>Batch String Testing</h2>
+            
+            <div class="input-group">
+              <label for="input-string-test">Enter Input String</label>
+              <div class="flex-row gap-8">
+                <input type="text" id="input-string-test" class="text-input" placeholder="010100">
+                <button class="btn btn-accent btn-sm" id="btn-test-eval">Evaluate</button>
+              </div>
+            </div>
+
+            <div class="table-scroll">
+              <table class="batch-table">
+                <thead>
+                  <tr>
+                    <th>Test Input</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
+                <tbody id="batch-table-body">
+                  <!-- Strings and Green/Red marks dynamically loaded -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual stack frame details (For PDA machine) -->
+        <div class="card peripheral-card hidden" id="card-pda-stack">
+          <div class="card-inner">
+            <h2>PDA Stack Visualizer</h2>
+            <div class="pda-stack-container" id="pda-stack-container">
+              <div class="pda-stack-empty">Stack is empty (Z₀ / ε)</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- Bottom: Tape display matrix (Turing Machine or generic string layout) -->
+    <section class="card tape-card">
+      <div class="card-inner">
+        <div class="card-header justify-between">
+          <h2>Memory Tape Input Strip</h2>
+          <div class="tape-state-display">
+            Current Character Index: <span class="highlight-text" id="lbl-tape-index">0</span>
+          </div>
+        </div>
+
+        <!-- The slideable tape frame grid -->
+        <div class="tape-viewport">
+          <div class="tape-slider" id="tape-slider">
+            <!-- 21 tape squares dynamically injected -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Visual Turing Machine & Automata Compiler Simulator &copy; 2026. Rendered with dynamic directed state graph vectors.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
